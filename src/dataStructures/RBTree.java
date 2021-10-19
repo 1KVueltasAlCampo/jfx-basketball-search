@@ -142,4 +142,12 @@ public class RBTree<K extends Comparable<K>,V>{
         }
         return(root);
     }
+
+    public RBNode<K, V> getRoot() {
+        return root;
+    }
+
+    public void setRoot(RBNode<K, V> root) {
+        this.root = root;
+    }
 }
