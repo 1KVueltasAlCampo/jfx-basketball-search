@@ -10,9 +10,15 @@ public class RBTree<K extends Comparable<K>,V>{
     private boolean leftThenRightRotate;
     private boolean rightThenLeftRotate;
     private RBNode<K,V> root;
+    private String treeStructure;
 
     public RBTree(){
         root = null;
+        leftRotate=false;
+        rightRotate=false;
+        leftThenRightRotate=false;
+        rightThenLeftRotate=false;
+        treeStructure="";
     }
 
     public RBNode<K,V> rotateLeft(RBNode<K,V> node){
@@ -143,11 +149,32 @@ public class RBTree<K extends Comparable<K>,V>{
         return(root);
     }
 
+    public void inorderTraversal(RBNode<K,V> node) {
+        if(node!=null) {
+            inorderTraversal(node.getLeft());
+            treeStructure += node.getValue().toString()+" ";
+            inorderTraversal(node.getRight());
+        }
+    }
+
+    public void inorderTraversal() {
+        treeStructure="";
+        inorderTraversal(this.root);
+    }
+
     public RBNode<K, V> getRoot() {
         return root;
     }
 
     public void setRoot(RBNode<K, V> root) {
         this.root = root;
+    }
+
+    public String getTreeStructure() {
+        return treeStructure;
+    }
+
+    public void setTreeStructure(String treeStructure) {
+        this.treeStructure = treeStructure;
     }
 }
