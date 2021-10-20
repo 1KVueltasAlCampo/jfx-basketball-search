@@ -149,6 +149,31 @@ public class RBTree<K extends Comparable<K>,V>{
         return(root);
     }
 
+    public RBNode<K,V> searchElement(K key){
+        return searchElement(root,key);
+    }
+
+    public RBNode<K,V> searchElement(RBNode<K,V> node,K key){
+        if(node==null){
+            return node;
+        }
+        else{
+            K aux = node.getKey();
+            if(aux.equals(key)){
+                return node;
+            }
+            else{
+                if(key.compareTo(aux)>0){
+                    return searchElement(node.getLeft(),key);
+                }
+                else{
+                    return searchElement(node.getRight(),key);
+                }
+            }
+        }
+    }
+
+
     public void inorderTraversal(RBNode<K,V> node) {
         if(node!=null) {
             inorderTraversal(node.getLeft());
@@ -161,6 +186,7 @@ public class RBTree<K extends Comparable<K>,V>{
         treeStructure="";
         inorderTraversal(this.root);
     }
+
 
     public RBNode<K, V> getRoot() {
         return root;
