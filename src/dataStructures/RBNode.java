@@ -1,17 +1,15 @@
 package dataStructures;
 
-public class RBNode<K extends Comparable<K>,V>{
+public class RBNode<K extends Comparable<K>,V> extends Node<K, V> {
 
     private boolean color;
-    private K key;
-    private V value;
+
     private RBNode<K,V> parent;
     private RBNode<K,V> left;
     private RBNode<K,V> right;
 
     public RBNode(K key, V value) {
-        this.key=key;
-        this.value=value;
+        super(key,value);
         color = true; //Red
         parent=null;
         left=null;

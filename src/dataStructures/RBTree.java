@@ -1,6 +1,6 @@
 package dataStructures;
 
-public class RBTree<K extends Comparable<K>,V>{
+public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
 
     private final static boolean BLACK = false;
     private final static boolean RED = true;
@@ -45,7 +45,8 @@ public class RBTree<K extends Comparable<K>,V>{
         return aux;
     }
 
-    public void insert(RBNode<K,V> node){
+    public void insert(K key,V value){
+        RBNode<K,V> node = new RBNode<>(key, value);
         if(root!=null){
             root=insert(root,node);
         }
@@ -149,8 +150,17 @@ public class RBTree<K extends Comparable<K>,V>{
         return(root);
     }
 
-    public RBNode<K,V> searchElement(K key){
-        return searchElement(root,key);
+    public V searchElement(K key){
+        RBNode<K,V> element = searchElement(root,key);
+        if(element!=null){
+            return element.getValue();
+        }
+        return null;
+    }
+
+    @Override
+    public void remove(K key) {
+        return;
     }
 
     public RBNode<K,V> searchElement(RBNode<K,V> node,K key){
