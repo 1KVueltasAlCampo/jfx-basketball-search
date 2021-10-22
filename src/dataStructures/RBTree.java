@@ -1,5 +1,9 @@
 package dataStructures;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+
 public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
 
     private final static boolean BLACK = false;
@@ -163,6 +167,10 @@ public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
         return;
     }
 
+    public RBNode<K,V> search(K key){
+        return searchElement(root,key);
+    }
+
     public RBNode<K,V> searchElement(RBNode<K,V> node,K key){
         if(node==null){
             return node;
@@ -187,10 +195,36 @@ public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
     public void inorderTraversal(RBNode<K,V> node) {
         if(node!=null) {
             inorderTraversal(node.getLeft());
-            treeStructure += node.getValue().toString()+" ";
+            treeStructure += node.getValue().toString();
             inorderTraversal(node.getRight());
         }
     }
+
+
+    /*
+    public ArrayList<Long> rangeSearch(RBNode<K,V> node,Double ){
+        if(node!=null && node.getKey()) {
+            inorderTraversal(node.getLeft());
+            treeStructure += node.getValue().toString();
+            inorderTraversal(node.getRight());
+        }
+    }
+     */
+
+    public LinkedList<V> searchFromARange(K min,K max){
+        LinkedList<V> newLinkedList = new LinkedList<>();
+        searchFromARange(this.search(max),newLinkedList,min);
+        return newLinkedList;
+    }
+
+    public void searchFromARange(RBNode<K,V> node,LinkedList<V> ll,K min){
+        if(node!=null && node.getKey().compareTo(min) > 0) {
+            searchFromARange(node.getRight(),ll,min);
+            ll.addAll((Collection<? extends V>) node.getValue());
+            searchFromARange(node.getLeft(),ll,min);
+        }
+    }
+
 
     public void inorderTraversal() {
         treeStructure="";
