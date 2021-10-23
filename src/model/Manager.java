@@ -5,6 +5,7 @@ import dataStructures.RBTree;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Manager {
     private RBTree<Double, ArrayList<Long>> pointsPerGame;
@@ -57,4 +58,13 @@ public class Manager {
         return null;
     }
 
+    //--------------------------------------------------------------------- GUI METHODS ----------------------------------------------------------
+    public void addPLayer(String fullName, int age, Teams team, float trueShooting, float usage, float assist, float rebound, float defensive){
+
+    }
+
+    public ArrayList<Teams> getTeams(){
+        ArrayList<Teams> teams=  new ArrayList<>(Arrays.asList(Teams.values()));
+        return teams;
+    }
 }

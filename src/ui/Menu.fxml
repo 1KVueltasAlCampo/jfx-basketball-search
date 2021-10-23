@@ -28,22 +28,22 @@
                 <Image url="@../../icons/SearchPlayer.png" />
             </image>
         </ImageView>
-        <Button layoutX="108.0" layoutY="196.0" mnemonicParsing="false" onAction="#MENUloadACsv" prefHeight="29.0" prefWidth="129.0" style="-fx-background-color: #ff8e3c;" text="Load a csv" textFill="#0d0d0d">
+        <Button layoutX="108.0" layoutY="196.0" mnemonicParsing="false" onAction="#MENUloadACsv" prefHeight="29.0" prefWidth="129.0" style="-fx-background-color: #ff8e3c; -fx-background-radius: 10;" text="Load a csv" textFill="#0d0d0d">
             <font>
                 <Font name="Consolas Bold" size="15.0" />
             </font>
         </Button>
-        <Button layoutX="108.0" layoutY="445.0" mnemonicParsing="false" onAction="#MENUeditDatabase" prefHeight="31.0" prefWidth="129.0" style="-fx-background-color: #ff8e3c;" text="Edit database" textFill="#0d0d0d">
+        <Button layoutX="108.0" layoutY="445.0" mnemonicParsing="false" onAction="#MENUeditDatabase" prefHeight="31.0" prefWidth="129.0" style="-fx-background-color: #ff8e3c; -fx-background-radius: 10;" text="Edit database" textFill="#0d0d0d">
             <font>
                 <Font name="Consolas Bold" size="15.0" />
             </font>
         </Button>
-        <Button layoutX="687.0" layoutY="446.0" mnemonicParsing="false" onAction="#MENUsearch" prefHeight="29.0" prefWidth="129.0" style="-fx-background-color: #ff8e3c;" text="Search player" textFill="#0d0d0d">
+        <Button layoutX="687.0" layoutY="446.0" mnemonicParsing="false" onAction="#MENUsearch" prefHeight="29.0" prefWidth="129.0" style="-fx-background-color: #ff8e3c; -fx-background-radius: 10;" text="Search player" textFill="#0d0d0d">
             <font>
                 <Font name="Consolas Bold" size="15.0" />
             </font>
         </Button>
-        <Button layoutX="685.0" layoutY="196.0" mnemonicParsing="false" onAction="#MENUaddPlayer" prefHeight="29.0" prefWidth="129.0" style="-fx-background-color: #ff8e3c;" text="Add player" textFill="#0d0d0d">
+        <Button layoutX="685.0" layoutY="196.0" mnemonicParsing="false" onAction="#MENUaddPlayer" prefHeight="29.0" prefWidth="129.0" style="-fx-background-color: #ff8e3c; -fx-background-radius: 10;" text="Add player" textFill="#0d0d0d">
             <font>
                 <Font name="Consolas Bold" size="15.0" />
             </font>
