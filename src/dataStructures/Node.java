@@ -1,12 +1,16 @@
 package dataStructures;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class Node<K,V> {
     protected K key;
-    protected V value;
+    ArrayList<V> value;
 
     public Node(K key,V value){
         this.key=key;
-        this.value=value;
+        this.value=new ArrayList<>();
+        this.value.add(value);
     }
 
     public K getKey() {
@@ -17,11 +21,8 @@ public class Node<K,V> {
         this.key = key;
     }
 
-    public V getValue() {
+    public ArrayList<V> getValue() {
         return value;
     }
 
-    public void setValue(V value) {
-        this.value = value;
-    }
 }

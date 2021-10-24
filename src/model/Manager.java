@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Manager {
-    private RBTree<Double, ArrayList<Long>> pointsPerGame;
+    private RBTree<Double, Long> pointsPerGame;
     private final static int pointsPerGameIndex = 3;
     private final static int POINTSPERGAME=1;
-    private RBTree<Double, ArrayList<Long>> blocks;
+    private RBTree<Double, Long> blocks;
     private final static int blocksIndex = 7;
     private RBTree<Double,ArrayList<Long>> steals;
     private final static int stealsIndex = 6;
@@ -35,9 +35,9 @@ public class Manager {
 
             if(!box[pointsPerGameIndex].equals("")){
                 Double ppg = Double.parseDouble(box[pointsPerGameIndex]);
-                RBNode<Double,ArrayList<Long>> exampleNode = pointsPerGame.search(ppg);
+                RBNode<Double,Long> exampleNode = pointsPerGame.search(ppg);
                 if(exampleNode==null){
-                    pointsPerGame.insert(ppg,new ArrayList<Long>());
+                    pointsPerGame.insert(ppg,index);
                 }
                 else{
                     exampleNode.getValue().add(index);
@@ -52,8 +52,8 @@ public class Manager {
     public ArrayList<Long> rangeSearch(int tree,double start,double end){
         switch (tree){
             case POINTSPERGAME:
-                //pointsPerGame.
-                break;
+                ArrayList<Long> al = new ArrayList<>();
+                return pointsPerGame.searchByRange(start,end);
         }
         return null;
     }
