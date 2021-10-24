@@ -1,5 +1,6 @@
 package model;
 
+import au.com.bytecode.opencsv.CSVReader;
 import dataStructures.RBNode;
 import dataStructures.RBTree;
 
@@ -11,9 +12,9 @@ public class Manager {
     private RBTree<Double, Long> pointsPerGame;
     private final static int pointsPerGameIndex = 3;
     private final static int POINTSPERGAME=1;
-    private RBTree<Double, Long> blocks;
+    private RBTree<Double, Integer> blocks;
     private final static int blocksIndex = 7;
-    private RBTree<Double,ArrayList<Long>> steals;
+    private RBTree<Double,Integer> steals;
     private final static int stealsIndex = 6;
     private File actualFile;
 
@@ -49,14 +50,27 @@ public class Manager {
         }
     }
 
-    public ArrayList<Long> rangeSearch(int tree,double start,double end){
+    public ArrayList<String> rangeSearch(int tree,double start,double end) throws IOException {
+        ArrayList<Long> indexAL = new ArrayList<>();
+        ArrayList<String> informationAL = new ArrayList<>();
         switch (tree){
             case POINTSPERGAME:
-                ArrayList<Long> al = new ArrayList<>();
-                return pointsPerGame.searchByRange(start,end);
+                indexAL = pointsPerGame.searchByRange(start,end);
+                break;
         }
-        return null;
+        if(!indexAL.isEmpty()){
+            CSVReader reader = new CSVReader(new FileReader(actualFile));
+            ArrayList<String[]> aux = (ArrayList<String[]>) reader.readAll();
+            for(int i=0;i<indexAL.size();i++){
+                String text = aux.get(i).toString().replaceAll("\\[","");
+                text.replaceAll("]","");
+                informationAL.add(text);
+            }
+        }
+        return informationAL;
     }
+
+
 
     //--------------------------------------------------------------------- GUI METHODS ----------------------------------------------------------
     public void addPLayer(String fullName, int age, Teams team, float trueShooting, float usage, float assist, float rebound, float defensive){
