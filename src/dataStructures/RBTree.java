@@ -1,8 +1,6 @@
 package dataStructures;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
 
 public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
 
@@ -66,7 +64,7 @@ public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
             return node;
         }
 
-        else if(node.compareTo(root) == -1) {
+        else if(node.compareTo(root) == 1) {
             root.setLeft(insert(root.getLeft(),node));
             root.getLeft().setParent(root);
             if(root!=this.root) {
@@ -154,7 +152,7 @@ public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
         return(root);
     }
 
-    public V searchElement(K key){
+    public ArrayList<V> searchElement(K key){
         RBNode<K,V> element = searchElement(root,key);
         if(element!=null){
             return element.getValue();
@@ -181,7 +179,7 @@ public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
                 return node;
             }
             else{
-                if(key.compareTo(aux)>0){
+                if(key.compareTo(aux)<0){
                     return searchElement(node.getLeft(),key);
                 }
                 else{
@@ -195,7 +193,8 @@ public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
     public void inorderTraversal(RBNode<K,V> node) {
         if(node!=null) {
             inorderTraversal(node.getLeft());
-            treeStructure += node.getValue().toString();
+            String temp = node.getValue().toString();
+            treeStructure += temp.substring(1,temp.length()-1);
             inorderTraversal(node.getRight());
         }
     }
@@ -211,18 +210,54 @@ public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
     }
      */
 
-    public LinkedList<V> searchFromARange(K min,K max){
-        LinkedList<V> newLinkedList = new LinkedList<>();
-        searchFromARange(this.search(max),newLinkedList,min);
-        return newLinkedList;
+    /*
+    public ArrayList<V> searchFromARange(K min,K max){
+        ArrayList<V> newArrayList = new ArrayList<>();
+        RBNode<K,V> aux = this.search(max);
+        searchFromARange(aux,newArrayList,min);
+        return newArrayList;
     }
 
-    public void searchFromARange(RBNode<K,V> node,LinkedList<V> ll,K min){
-        if(node!=null && node.getKey().compareTo(min) > 0) {
-            searchFromARange(node.getRight(),ll,min);
-            ll.addAll((Collection<? extends V>) node.getValue());
-            searchFromARange(node.getLeft(),ll,min);
+    public void searchFromARange(RBNode<K,V> node,ArrayList<V> ll,K min){
+        if( node != null && node.getKey().compareTo(min) >= 0){
+            helpSearchFromARange(node.getParent(),ll,min);
         }
+    }
+
+    public void helpSearchFromARange(RBNode<K,V> node,ArrayList<V> ll,K min){
+        if(node!=null && node.getKey().compareTo(min) >= 0) {
+            helpSearchFromARange(node.getRight(),ll,min);
+            ll.addAll(node.getValue());
+            helpSearchFromARange(node.getLeft(),ll,min);
+        }
+    }
+    */
+
+    public ArrayList<V> searchByRange(K min,K max){
+        ArrayList<V> aL = new ArrayList<>();
+        searchByRange(root,aL,min,max);
+
+        return aL;
+    }
+
+    public void searchByRange(RBNode<K,V> node, ArrayList<V> ll, K min, K max) {
+        if (node == null) {
+            return;
+        }
+        /* Since the desired o/p is sorted, recurse for left subtree first
+         If root->data is greater than k1, then only we can get o/p keys
+         in left subtree */
+        if (node.getKey().compareTo(min) > 0) { //k1 < node.data
+            searchByRange(node.getLeft(),ll, min, max);
+        }
+
+        /* if root's data lies in range, then prints root's data */
+        if (node.getKey().compareTo(min) >= 0 && node.getKey().compareTo(max) <= 0) { //k1 <= node.data && k2 >= node.data
+            ll.addAll(node.getValue());
+        }
+
+        /* recursively call the right subtree  */
+        searchByRange(node.getRight(),ll, min, max);
     }
 
 
