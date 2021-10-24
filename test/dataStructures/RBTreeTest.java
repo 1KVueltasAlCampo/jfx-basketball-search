@@ -59,7 +59,7 @@ public class RBTreeTest {
         ayuda.insert(3.0,4L);
         ayuda.insert(2.0,23L);
         ayuda.insert(1.0,9L);
-        assertEquals(ayuda.searchByRange(2.0,6.1).toString(),"[4, 23, 9]");
+        assertEquals(ayuda.searchByRange(2.0,6.1).toString(),"[19, 18, 17, 17, 1, 4, 23]");
     }
 
     //maldito kennet me hiciste escribir algo que no queria y ahora me toca hacer otro commit

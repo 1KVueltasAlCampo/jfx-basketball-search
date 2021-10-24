@@ -1,7 +1,6 @@
 package dataStructures;
 
-public class AVLNode <K extends Comparable<K>,V> extends Node<K, V>{
-    K key;
+public class AVLNode<K extends Comparable<K>,V> extends Node<K, V>{
     int height;
     AVLNode left;
     AVLNode right;
