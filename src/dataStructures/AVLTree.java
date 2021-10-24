@@ -1,5 +1,7 @@
 package dataStructures;
 
+import java.util.ArrayList;
+
 public class AVLTree <K extends Comparable<K>,V> implements TreeInterface<K,V>{
 
     private AVLNode<K,V> root;
@@ -57,7 +59,7 @@ public class AVLTree <K extends Comparable<K>,V> implements TreeInterface<K,V>{
         return height(N.left) - height(N.right);
     }
 
-
+    /*
     public AVLNode insert(AVLNode node, K key, V value) {
 
         if (node == null) {
@@ -97,6 +99,7 @@ public class AVLTree <K extends Comparable<K>,V> implements TreeInterface<K,V>{
 
         return node;
     }
+    */
 
     public void preOrder(AVLNode node) {
         if (node != null) {
@@ -112,7 +115,7 @@ public class AVLTree <K extends Comparable<K>,V> implements TreeInterface<K,V>{
     }
 
     @Override
-    public V searchElement(K key) {
+    public ArrayList<V> searchElement(K key) {
         return null;
     }
 

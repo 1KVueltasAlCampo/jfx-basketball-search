@@ -247,17 +247,17 @@ public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
         /* Since the desired o/p is sorted, recurse for left subtree first
          If root->data is greater than k1, then only we can get o/p keys
          in left subtree */
-        if (node.getKey().compareTo(min) > 0) { //k1 < node.data
-            searchByRange(node.getLeft(),ll, min, max);
+        if (node.getKey().compareTo(max) < 0) { //k1 < node.data
+            searchByRange(node.getRight(),ll, min, max);
         }
 
         /* if root's data lies in range, then prints root's data */
-        if (node.getKey().compareTo(min) >= 0 && node.getKey().compareTo(max) <= 0) { //k1 <= node.data && k2 >= node.data
+        if (node.getKey().compareTo(max) <= 0 && node.getKey().compareTo(min) >= 0) { //k1 <= node.data && k2 >= node.data
             ll.addAll(node.getValue());
         }
 
         /* recursively call the right subtree  */
-        searchByRange(node.getRight(),ll, min, max);
+        searchByRange(node.getLeft(),ll, min, max);
     }
 
 
