@@ -199,40 +199,6 @@ public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
         }
     }
 
-
-    /*
-    public ArrayList<Long> rangeSearch(RBNode<K,V> node,Double ){
-        if(node!=null && node.getKey()) {
-            inorderTraversal(node.getLeft());
-            treeStructure += node.getValue().toString();
-            inorderTraversal(node.getRight());
-        }
-    }
-     */
-
-    /*
-    public ArrayList<V> searchFromARange(K min,K max){
-        ArrayList<V> newArrayList = new ArrayList<>();
-        RBNode<K,V> aux = this.search(max);
-        searchFromARange(aux,newArrayList,min);
-        return newArrayList;
-    }
-
-    public void searchFromARange(RBNode<K,V> node,ArrayList<V> ll,K min){
-        if( node != null && node.getKey().compareTo(min) >= 0){
-            helpSearchFromARange(node.getParent(),ll,min);
-        }
-    }
-
-    public void helpSearchFromARange(RBNode<K,V> node,ArrayList<V> ll,K min){
-        if(node!=null && node.getKey().compareTo(min) >= 0) {
-            helpSearchFromARange(node.getRight(),ll,min);
-            ll.addAll(node.getValue());
-            helpSearchFromARange(node.getLeft(),ll,min);
-        }
-    }
-    */
-
     public ArrayList<V> searchByRange(K min,K max){
         ArrayList<V> aL = new ArrayList<>();
         searchByRange(root,aL,min,max);
@@ -244,19 +210,12 @@ public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
         if (node == null) {
             return;
         }
-        /* Since the desired o/p is sorted, recurse for left subtree first
-         If root->data is greater than k1, then only we can get o/p keys
-         in left subtree */
         if (node.getKey().compareTo(max) < 0) { //k1 < node.data
             searchByRange(node.getRight(),ll, min, max);
         }
-
-        /* if root's data lies in range, then prints root's data */
         if (node.getKey().compareTo(max) <= 0 && node.getKey().compareTo(min) >= 0) { //k1 <= node.data && k2 >= node.data
             ll.addAll(node.getValue());
         }
-
-        /* recursively call the right subtree  */
         searchByRange(node.getLeft(),ll, min, max);
     }
 

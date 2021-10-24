@@ -71,6 +71,7 @@ public class ManagerGUI {
 
     @FXML
     void LOADCSVdone(ActionEvent event) throws IOException {
+        manager.readCsv(selectedFile);
         showMenu();
     }
 
@@ -154,7 +155,11 @@ public class ManagerGUI {
 
     @FXML
     void SEARCHsearch(ActionEvent event) {
+        System.out.println(SEARCHfilter.getValue());
+        switch (SEARCHfilter.getVisibleRowCount()){
 
+        }
+        //manager.rangeSearch(SEARCHfilter,SEARCHfilterFrom,SEARCHfilterTo);
     }
 
 
