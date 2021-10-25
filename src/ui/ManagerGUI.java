@@ -7,10 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
@@ -33,6 +30,7 @@ public class ManagerGUI {
         manager = new Manager();
         showMenu();
     }
+
     //-------------------------------------------------------- ALL WINDOWS CODE --------------------------------------------------------
     Stage mainStage;
     Stage popUpStage;
@@ -41,10 +39,29 @@ public class ManagerGUI {
 
     File selectedFile;
 
+    private void missingInfo(){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Missing information!");
+        alert.setHeaderText("Looks like you've skipped some field");
+        alert.setContentText("Fill all the fields and try again");
+        alert.show();
+    }
+
+    private void wrongFormat(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Invalid format!");
+        alert.setHeaderText("Looks like some field has a different format");
+        alert.setContentText("Check the formats and try again");
+        alert.show();
+    }
+
+
     @FXML
     void ALLWINDOWScancel(ActionEvent event) throws IOException {
         showMenu();
     }
+
+
     //-------------------------------------------------------- MENU CODE --------------------------------------------------------
 
     @FXML
@@ -88,7 +105,6 @@ public class ManagerGUI {
     }
 
     //-------------------------------------------------------- ADD A PLAYER CODE --------------------------------------------------------
-
     @FXML
     private TextField ADDPLAYERname;
 
@@ -96,25 +112,26 @@ public class ManagerGUI {
     private TextField ADDPLAYERlastNames;
 
     @FXML
-    private ComboBox<Teams> ADDPLAYERteam;
+    private TextField ADDPLAYERage;
 
     @FXML
-    private TextField ADDPLAYERtrueShooting;
+    private TextField ADDPLAYERpointsPerGame;
 
     @FXML
-    private TextField ADDPLAYERusage;
+    private TextField ADDPLAYERRebounds;
 
     @FXML
     private TextField ADDPLAYERassist;
 
     @FXML
-    private TextField ADDPLAYERrebound;
+    private TextField ADDPLAYERsteals;
 
     @FXML
-    private TextField ADDPLAYERdefensive;
+    private TextField ADDPLAYERblocks;
+
 
     @FXML
-    private TextField ADDPLAYERage;
+    private ComboBox<Teams> ADDPLAYERteam;
 
     @FXML
     void ADDPLAYERdone(ActionEvent event) {
@@ -133,25 +150,45 @@ public class ManagerGUI {
     private TableColumn<?, ?> SEARCHplayersTcFullname;
 
     @FXML
-    private TableColumn<?, ?> SEARCHplayersTcTrueShooting;
+    private TableColumn<?, ?> SEARCHplayersTcAge;
 
     @FXML
-    private TableColumn<?, ?> SEARCHplayersTcAssist1;
+    private TableColumn<?, ?> SEARCHplayersTcTeam;
 
     @FXML
-    private TableColumn<?, ?> SEARCHplayersTcAssist;
+    private TableColumn<?, ?> SEARCHplayersPointsPerGame;
 
     @FXML
-    private TableColumn<?, ?> SEARCHplayersTcRebound;
+    private TableColumn<?, ?> SEARCHplayersTcRebounds;
 
     @FXML
-    private TableColumn<?, ?> SEARCHplayersTcRebound1;
+    private TableColumn<?, ?> SEARCHplayersTcAssists;
+
+    @FXML
+    private TableColumn<?, ?> SEARCHplayersTcSteals;
+
+    @FXML
+    private TableColumn<?, ?> SEARCHplayersTcBlocks;
 
     @FXML
     private TextField SEARCHfilterFrom;
 
     @FXML
     private TextField SEARCHfilterTo;
+
+
+    @FXML
+    private Button SEARCHcompareButton;
+
+    @FXML
+    void SEARCHfilterChanged(ActionEvent event) {
+        if(SEARCHfilter.getValue().equals("Points per game") || SEARCHfilter.getValue().equals("Assists")){
+            SEARCHcompareButton.setVisible(true);
+        }else{
+            SEARCHcompareButton.setVisible(false);
+
+        }
+    }
 
     @FXML
     void SEARCHsearch(ActionEvent event) {
@@ -162,6 +199,10 @@ public class ManagerGUI {
         //manager.rangeSearch(SEARCHfilter,SEARCHfilterFrom,SEARCHfilterTo);
     }
 
+    @FXML
+    void SEARCHsearchAndCompare(ActionEvent event) {
+
+    }
 
     //-------------------------------------------------------- SHOW WINDOWS CODE --------------------------------------------------------
 
@@ -208,11 +249,11 @@ public class ManagerGUI {
         mainStage.hide();
 
         ArrayList<String> items = new ArrayList<>();
-        items.add("True shooting");
-        items.add("Usage");
-        items.add("Assist");
-        items.add("Rebound");
-        items.add("Defensive");
+        items.add("Points per game");
+        items.add("Assists");
+        items.add("Rebounds");
+        items.add("Steals");
+        items.add("Blocks");
 
 
         ObservableList<String> filterItems = FXCollections.observableArrayList(items);

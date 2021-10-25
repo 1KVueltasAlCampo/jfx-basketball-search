@@ -9,6 +9,102 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="540.0" minWidth="960.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #eff0f3;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
     <children>
+      <Label layoutX="104.0" layoutY="142.0" text="Name(s):" textFill="#2d2d2d">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="76.0" layoutY="208.0" text="Last names:" textFill="#2d2d2d">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="130.0" layoutY="319.0" text="Team:" textFill="#2d2d2d">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="622.0" layoutY="45.0" text="Key stats" textFill="#2d2d2d">
+         <font>
+            <Font name="Consolas Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="161.0" layoutY="45.0" text="Basic information" textFill="#2d2d2d">
+         <font>
+            <Font name="Consolas Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="473.0" layoutY="141.0" text="Points per game:" textFill="#2d2d2d">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="745.0" layoutY="142.0" text="Rebounds:" textFill="#2d2d2d">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="764.0" layoutY="219.0" text="Steals:" textFill="#2d2d2d">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="559.0" layoutY="219.0" text="Assist:" textFill="#2d2d2d">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="141.0" layoutY="259.0" text="Age:" textFill="#2d2d2d">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="559.0" layoutY="298.0" text="Blocks:" textFill="#2d2d2d">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="ADDPLAYERname" layoutX="200.0" layoutY="139.0" prefHeight="27.0" prefWidth="176.0" style="-fx-background-radius: 10;">
+         <font>
+            <Font name="Consolas Bold" size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="ADDPLAYERlastNames" layoutX="200.0" layoutY="205.0" prefHeight="27.0" prefWidth="176.0" style="-fx-background-radius: 10;">
+         <font>
+            <Font name="Consolas Bold" size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="ADDPLAYERage" alignment="CENTER" layoutX="200.0" layoutY="257.0" prefHeight="27.0" prefWidth="176.0" promptText="An integer" style="-fx-background-radius: 10;">
+         <font>
+            <Font name="Consolas Bold" size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="ADDPLAYERpointsPerGame" alignment="CENTER_RIGHT" layoutX="643.0" layoutY="139.0" prefHeight="27.0" prefWidth="72.0" style="-fx-background-radius: 10;">
+         <font>
+            <Font name="Consolas Bold" size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="ADDPLAYERRebounds" alignment="CENTER_RIGHT" layoutX="847.0" layoutY="139.0" prefHeight="27.0" prefWidth="72.0" style="-fx-background-radius: 10;">
+         <font>
+            <Font name="Consolas Bold" size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="ADDPLAYERassist" alignment="CENTER_RIGHT" layoutX="643.0" layoutY="219.0" prefHeight="27.0" prefWidth="72.0" style="-fx-background-radius: 10;">
+         <font>
+            <Font name="Consolas Bold" size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="ADDPLAYERsteals" alignment="CENTER_RIGHT" layoutX="847.0" layoutY="216.0" prefHeight="27.0" prefWidth="72.0" style="-fx-background-radius: 10;">
+         <font>
+            <Font name="Consolas Bold" size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="ADDPLAYERblocks" alignment="CENTER" layoutX="643.0" layoutY="296.0" prefHeight="27.0" prefWidth="72.0" style="-fx-background-radius: 10;">
+         <font>
+            <Font name="Consolas Bold" size="14.0" />
+         </font>
+      </TextField>
+      <ComboBox fx:id="ADDPLAYERteam" layoutX="200.0" layoutY="318.0" prefHeight="25.0" prefWidth="176.0" promptText="No team choosed" style="-fx-background-radius: 10; -fx-background-color: #e2e3e4;" />
         <Button layoutX="264.0" layoutY="471.0" mnemonicParsing="false" onAction="#ADDPLAYERdone" prefHeight="29.0" prefWidth="133.0" style="-fx-background-color: #ff8e3c; -fx-background-radius: 10;" text="Add player">
             <font>
                 <Font name="Consolas Bold" size="15.0" />
@@ -19,101 +115,5 @@
             <Font name="Consolas Bold" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="104.0" layoutY="142.0" text="Name(s):" textFill="#2d2d2d">
-         <font>
-            <Font name="Consolas Bold" size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="ADDPLAYERname" layoutX="200.0" layoutY="139.0" prefHeight="27.0" prefWidth="176.0" style="-fx-background-radius: 10;">
-         <font>
-            <Font name="Consolas Bold" size="14.0" />
-         </font>
-      </TextField>
-      <Label layoutX="76.0" layoutY="208.0" text="Last names:" textFill="#2d2d2d">
-         <font>
-            <Font name="Consolas Bold" size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="ADDPLAYERlastNames" layoutX="200.0" layoutY="205.0" prefHeight="27.0" prefWidth="176.0" style="-fx-background-radius: 10;">
-         <font>
-            <Font name="Consolas Bold" size="14.0" />
-         </font>
-      </TextField>
-      <Label layoutX="130.0" layoutY="319.0" text="Team:" textFill="#2d2d2d">
-         <font>
-            <Font name="Consolas Bold" size="18.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="ADDPLAYERteam" layoutX="200.0" layoutY="318.0" prefHeight="25.0" prefWidth="176.0" promptText="No team choosed" style="-fx-background-radius: 10; -fx-background-color: #e2e3e4;" />
-      <Label layoutX="161.0" layoutY="45.0" text="Basic information" textFill="#2d2d2d">
-         <font>
-            <Font name="Consolas Bold" size="22.0" />
-         </font>
-      </Label>
-      <Label layoutX="622.0" layoutY="45.0" text="Key stats" textFill="#2d2d2d">
-         <font>
-            <Font name="Consolas Bold" size="22.0" />
-         </font>
-      </Label>
-      <Label layoutX="480.0" layoutY="141.0" text="True shooting:" textFill="#2d2d2d">
-         <font>
-            <Font name="Consolas Bold" size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="ADDPLAYERtrueShooting" alignment="CENTER_RIGHT" layoutX="640.0" layoutY="139.0" prefHeight="27.0" prefWidth="72.0" promptText="\%" style="-fx-background-radius: 10;">
-         <font>
-            <Font name="Consolas Bold" size="14.0" />
-         </font>
-      </TextField>
-      <Label layoutX="766.0" layoutY="141.0" text="Usage:" textFill="#2d2d2d">
-         <font>
-            <Font name="Consolas Bold" size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="ADDPLAYERusage" alignment="CENTER_RIGHT" layoutX="847.0" layoutY="139.0" prefHeight="27.0" prefWidth="72.0" promptText="\%" style="-fx-background-radius: 10;">
-         <font>
-            <Font name="Consolas Bold" size="14.0" />
-         </font>
-      </TextField>
-      <Label layoutX="549.0" layoutY="218.0" text="Assist:" textFill="#2d2d2d">
-         <font>
-            <Font name="Consolas Bold" size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="ADDPLAYERassist" alignment="CENTER_RIGHT" layoutX="640.0" layoutY="216.0" prefHeight="27.0" prefWidth="72.0" promptText="\%" style="-fx-background-radius: 10;">
-         <font>
-            <Font name="Consolas Bold" size="14.0" />
-         </font>
-      </TextField>
-      <Label layoutX="745.0" layoutY="218.0" text="Rebound:" textFill="#2d2d2d">
-         <font>
-            <Font name="Consolas Bold" size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="ADDPLAYERrebound" alignment="CENTER_RIGHT" layoutX="847.0" layoutY="216.0" prefHeight="27.0" prefWidth="72.0" promptText="\%" style="-fx-background-radius: 10;">
-         <font>
-            <Font name="Consolas Bold" size="14.0" />
-         </font>
-      </TextField>
-      <Label layoutX="529.0" layoutY="296.0" text="Defensive:" textFill="#2d2d2d">
-         <font>
-            <Font name="Consolas Bold" size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="ADDPLAYERdefensive" alignment="CENTER" layoutX="643.0" layoutY="295.0" prefHeight="27.0" prefWidth="72.0" promptText="+/-" style="-fx-background-radius: 10;">
-         <font>
-            <Font name="Consolas Bold" size="14.0" />
-         </font>
-      </TextField>
-      <Label layoutX="141.0" layoutY="259.0" text="Age:" textFill="#2d2d2d">
-         <font>
-            <Font name="Consolas Bold" size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="ADDPLAYERage" alignment="CENTER" layoutX="200.0" layoutY="257.0" prefHeight="27.0" prefWidth="176.0" promptText="An integer" style="-fx-background-radius: 10;">
-         <font>
-            <Font name="Consolas Bold" size="14.0" />
-         </font>
-      </TextField>
     </children>
 </Pane>
