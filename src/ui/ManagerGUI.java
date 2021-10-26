@@ -1,5 +1,6 @@
 package ui;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,11 +9,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Manager;
+import model.Player;
 import model.Teams;
 
 import java.io.File;
@@ -140,35 +144,37 @@ public class ManagerGUI {
 
     //-------------------------------------------------------- SEARCH CODE --------------------------------------------------------
 
+    private final ObservableList<Player> dataList = FXCollections.observableArrayList();
+
     @FXML
     private ComboBox<String> SEARCHfilter;
 
     @FXML
-    private TableView<?> SEARCHplayersTv;
+    private TableView<Player> SEARCHplayersTv;
 
     @FXML
-    private TableColumn<?, ?> SEARCHplayersTcFullname;
+    private TableColumn<Player, String> SEARCHplayersTcFullname;
 
     @FXML
-    private TableColumn<?, ?> SEARCHplayersTcAge;
+    private TableColumn<Player, String> SEARCHplayersTcAge;
 
     @FXML
-    private TableColumn<?, ?> SEARCHplayersTcTeam;
+    private TableColumn<Player, String> SEARCHplayersTcTeam;
 
     @FXML
-    private TableColumn<?, ?> SEARCHplayersPointsPerGame;
+    private TableColumn<Player, String> SEARCHplayersPointsPerGame;
 
     @FXML
-    private TableColumn<?, ?> SEARCHplayersTcRebounds;
+    private TableColumn<Player, String> SEARCHplayersTcRebounds;
 
     @FXML
-    private TableColumn<?, ?> SEARCHplayersTcAssists;
+    private TableColumn<Player, String> SEARCHplayersTcAssists;
 
     @FXML
-    private TableColumn<?, ?> SEARCHplayersTcSteals;
+    private TableColumn<Player, String> SEARCHplayersTcSteals;
 
     @FXML
-    private TableColumn<?, ?> SEARCHplayersTcBlocks;
+    private TableColumn<Player, String> SEARCHplayersTcBlocks;
 
     @FXML
     private TextField SEARCHfilterFrom;
@@ -191,12 +197,40 @@ public class ManagerGUI {
     }
 
     @FXML
-    void SEARCHsearch(ActionEvent event) {
-        System.out.println(SEARCHfilter.getValue());
-        switch (SEARCHfilter.getVisibleRowCount()){
-
+    void SEARCHsearch(ActionEvent event) throws IOException {
+        dataList.clear();
+        System.out.println("entra");
+        ArrayList<String> aL = new ArrayList<>();
+        switch (SEARCHfilter.getValue()) {
+            case "Points per game":
+                System.out.println("ppg");
+                aL = manager.rangeSearch(3, Double.parseDouble(SEARCHfilterFrom.getText()), Double.parseDouble(SEARCHfilterTo.getText()));
+                break;
         }
-        //manager.rangeSearch(SEARCHfilter,SEARCHfilterFrom,SEARCHfilterTo);
+
+        System.out.println(aL.size());
+        for (int i = 0; i < aL.size(); i++) {
+            //System.out.println("texto: "+ aL.get(i));
+            String[] parts = aL.get(i).split(";");
+            Player p = new Player(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7]);
+            dataList.add(p);
+        }
+
+        SEARCHplayersTcFullname.setCellValueFactory(new PropertyValueFactory<>("name"));
+        SEARCHplayersTcAge.setCellValueFactory(new PropertyValueFactory<>("age"));
+        SEARCHplayersTcTeam.setCellValueFactory(new PropertyValueFactory<>("team"));
+        SEARCHplayersPointsPerGame.setCellValueFactory(new PropertyValueFactory<>("pointsPerGame"));
+        SEARCHplayersTcAssists.setCellValueFactory(new PropertyValueFactory<>("assists"));
+        SEARCHplayersTcRebounds.setCellValueFactory(new PropertyValueFactory<>("rebounds"));
+        SEARCHplayersTcSteals.setCellValueFactory(new PropertyValueFactory<>("steals"));
+        SEARCHplayersTcBlocks.setCellValueFactory(new PropertyValueFactory<>("blocks"));
+
+        ObservableList<Player> aList = FXCollections.observableArrayList(dataList);
+        SEARCHplayersTv.setItems(aList);
+        SEARCHplayersTcFullname.setCellFactory(TextFieldTableCell.forTableColumn());
+        SEARCHplayersTv.getColumns().setAll(SEARCHplayersTcFullname,SEARCHplayersTcAge,SEARCHplayersTcTeam,
+                SEARCHplayersPointsPerGame,SEARCHplayersTcAssists,SEARCHplayersTcRebounds,
+                SEARCHplayersTcSteals,SEARCHplayersTcBlocks);
     }
 
     @FXML

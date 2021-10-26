@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Manager {
-    private RBTree<Double, Long> pointsPerGame;
+    private RBTree<Double, Integer> pointsPerGame;
     private final static int pointsPerGameIndex = 3;
     private final static int POINTSPERGAME=1;
     private RBTree<Double, Integer> blocks;
@@ -29,19 +29,21 @@ public class Manager {
         BufferedReader br = new BufferedReader(new FileReader(file));
         br.readLine();
         String aux = br.readLine();
-        long index = 1;
+        int index = 1;
         String[] box;
         while(aux!=null){
-            box = aux.split(",");
+            box = aux.split(";");
 
             if(!box[pointsPerGameIndex].equals("")){
                 Double ppg = Double.parseDouble(box[pointsPerGameIndex]);
-                RBNode<Double,Long> exampleNode = pointsPerGame.search(ppg);
+                RBNode<Double,Integer> exampleNode = pointsPerGame.search(ppg);
                 if(exampleNode==null){
                     pointsPerGame.insert(ppg,index);
+                    //System.out.println("se inserta "+index);
                 }
                 else{
                     exampleNode.getValue().add(index);
+                    //System.out.println("se inserta "+index);
                 }
             }
 
@@ -51,19 +53,21 @@ public class Manager {
     }
 
     public ArrayList<String> rangeSearch(int tree,double start,double end) throws IOException {
-        ArrayList<Long> indexAL = new ArrayList<>();
+        ArrayList<Integer> indexAL = new ArrayList<>();
         ArrayList<String> informationAL = new ArrayList<>();
         switch (tree){
-            case POINTSPERGAME:
+            case pointsPerGameIndex:
                 indexAL = pointsPerGame.searchByRange(start,end);
+                System.out.println("indexAL size "+indexAL.size());
                 break;
         }
         if(!indexAL.isEmpty()){
             CSVReader reader = new CSVReader(new FileReader(actualFile));
             ArrayList<String[]> aux = (ArrayList<String[]>) reader.readAll();
             for(int i=0;i<indexAL.size();i++){
-                String text = aux.get(i).toString().replaceAll("\\[","");
+                String text = String.join(",",aux.get(indexAL.get(i))).replaceAll("\\[","");
                 text.replaceAll("]","");
+                System.out.println("text conseguido "+text);
                 informationAL.add(text);
             }
         }
