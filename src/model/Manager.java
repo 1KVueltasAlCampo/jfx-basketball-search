@@ -7,6 +7,8 @@ import dataStructures.RBNode;
 import dataStructures.RBTree;
 
 import java.io.*;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -20,6 +22,7 @@ public class Manager {
     private final static int stealsIndex = 6;
     private RBTree<Double, Integer> blocks;
     private final static int blocksIndex = 7;
+    private String time;
 
     private File actualFile;
 
@@ -92,37 +95,54 @@ public class Manager {
     public ArrayList<String> rangeSearch(int tree,double start,double end) throws IOException {
         ArrayList<Integer> indexAL = new ArrayList<>();
         ArrayList<String> informationAL = new ArrayList<>();
+        long time1=0,time2=0;
         switch (tree){
             case pointsPerGameIndex:
                 if(start==end){
+                    time1=System.nanoTime();
                     indexAL = pointsPerGame.searchElement(start);
+                    time2=System.nanoTime();
                 }
                 else{
+                    time1=System.nanoTime();
                     indexAL = pointsPerGame.searchByRange(start,end);
+                    time2=System.nanoTime();
                 }
                 break;
             case assistsIndex:
                 if(start==end){
+                    time1=System.nanoTime();
                     indexAL = assists.searchElement(start);
+                    time2=System.nanoTime();
                 }
                 else{
+                    time1=System.nanoTime();
                     indexAL = assists.searchByRange(start,end);
+                    time2=System.nanoTime();
                 }
                 break;
             case blocksIndex:
                 if(start==end){
+                    time1=System.nanoTime();
                     indexAL = blocks.searchElement(start);
+                    time2=System.nanoTime();
                 }
                 else{
+                    time1=System.nanoTime();
                     indexAL=blocks.searchByRange(start,end);
+                    time2=System.nanoTime();
                 }
                 break;
             case stealsIndex:
                 if(start==end){
+                    time1=System.nanoTime();
                     indexAL=steals.searchElement(start);
+                    time2=System.nanoTime();
                 }
                 else{
+                    time1=System.nanoTime();
                     indexAL=steals.searchByRange(start,end);
+                    time2=System.nanoTime();
                 }
                 break;
         }
@@ -135,6 +155,10 @@ public class Manager {
                 informationAL.add(text);
             }
         }
+        DecimalFormat df = new DecimalFormat("#.####");
+        df.setRoundingMode(RoundingMode.CEILING);
+        time= df.format(((float)(time2-time1)/1000000))+" milliseconds";
+
         return informationAL;
     }
 
@@ -184,6 +208,26 @@ public class Manager {
 
     public void setActualFile(File actualFile) {
         this.actualFile = actualFile;
+    }
+
+    public AVLTree<Double, Integer> getAssists() {
+        return assists;
+    }
+
+    public void setAssists(AVLTree<Double, Integer> assists) {
+        this.assists = assists;
+    }
+
+    public static int getAssistsIndex() {
+        return assistsIndex;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     //--------------------------------------------------------------------- GUI METHODS ----------------------------------------------------------

@@ -199,6 +199,7 @@ public class ManagerGUI {
     @FXML
     void SEARCHsearch(ActionEvent event) throws IOException {
         dataList.clear();
+        String searchResult="";
         ArrayList<String> aL = new ArrayList<>();
         Double from = Double.parseDouble(SEARCHfilterFrom.getText());
         Double to = Double.parseDouble(SEARCHfilterTo.getText());
@@ -238,6 +239,8 @@ public class ManagerGUI {
         SEARCHplayersTv.getColumns().setAll(SEARCHplayersTcFullname,SEARCHplayersTcAge,SEARCHplayersTcTeam,
                 SEARCHplayersPointsPerGame,SEARCHplayersTcAssists,SEARCHplayersTcRebounds,
                 SEARCHplayersTcSteals,SEARCHplayersTcBlocks);
+
+        System.out.println(manager.getTime());
     }
 
     @FXML
