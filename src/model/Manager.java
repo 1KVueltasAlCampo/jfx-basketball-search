@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 public class Manager {
     private RBTree<Double, Integer> pointsPerGame;
+    private final static String SEPARATOR = ";";
     private final static int pointsPerGameIndex = 3;
     private final static int POINTSPERGAME=1;
     private RBTree<Double, Integer> blocks;
@@ -32,18 +33,38 @@ public class Manager {
         int index = 1;
         String[] box;
         while(aux!=null){
-            box = aux.split(";");
+            box = aux.split(SEPARATOR);
 
             if(!box[pointsPerGameIndex].equals("")){
                 Double ppg = Double.parseDouble(box[pointsPerGameIndex]);
                 RBNode<Double,Integer> exampleNode = pointsPerGame.search(ppg);
                 if(exampleNode==null){
                     pointsPerGame.insert(ppg,index);
-                    //System.out.println("se inserta "+index);
                 }
                 else{
                     exampleNode.getValue().add(index);
-                    //System.out.println("se inserta "+index);
+                }
+            }
+
+            if(!box[blocksIndex].equals("")){
+                Double ppg = Double.parseDouble(box[blocksIndex]);
+                RBNode<Double,Integer> exampleNode = blocks.search(ppg);
+                if(exampleNode==null){
+                    blocks.insert(ppg,index);
+                }
+                else{
+                    exampleNode.getValue().add(index);
+                }
+            }
+
+            if(!box[stealsIndex].equals("")){
+                Double ppg = Double.parseDouble(box[stealsIndex]);
+                RBNode<Double,Integer> exampleNode = steals.search(ppg);
+                if(exampleNode==null){
+                    steals.insert(ppg,index);
+                }
+                else{
+                    exampleNode.getValue().add(index);
                 }
             }
 
@@ -58,7 +79,12 @@ public class Manager {
         switch (tree){
             case pointsPerGameIndex:
                 indexAL = pointsPerGame.searchByRange(start,end);
-                System.out.println("indexAL size "+indexAL.size());
+                break;
+            case blocksIndex:
+                indexAL=blocks.searchByRange(start,end);
+                break;
+            case stealsIndex:
+                indexAL=steals.searchByRange(start,end);
                 break;
         }
         if(!indexAL.isEmpty()){
@@ -67,7 +93,6 @@ public class Manager {
             for(int i=0;i<indexAL.size();i++){
                 String text = String.join(",",aux.get(indexAL.get(i))).replaceAll("\\[","");
                 text.replaceAll("]","");
-                System.out.println("text conseguido "+text);
                 informationAL.add(text);
             }
         }

@@ -203,8 +203,13 @@ public class ManagerGUI {
         ArrayList<String> aL = new ArrayList<>();
         switch (SEARCHfilter.getValue()) {
             case "Points per game":
-                System.out.println("ppg");
                 aL = manager.rangeSearch(3, Double.parseDouble(SEARCHfilterFrom.getText()), Double.parseDouble(SEARCHfilterTo.getText()));
+                break;
+            case "Steals":
+                aL=manager.rangeSearch(6,Double.parseDouble(SEARCHfilterFrom.getText()),Double.parseDouble(SEARCHfilterTo.getText()));
+                break;
+            case "Blocks":
+                aL = manager.rangeSearch(7, Double.parseDouble(SEARCHfilterFrom.getText()), Double.parseDouble(SEARCHfilterTo.getText()));
                 break;
         }
 
