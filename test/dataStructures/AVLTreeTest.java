@@ -13,24 +13,24 @@ public class AVLTreeTest {
     @Test
     public void insertionTest1(){
         setupScene1();
-        testAVLTree.insert(1.0,"hola");
-        assertEquals(testAVLTree.getRoot().getValue().get(0),"hola");
+        testAVLTree.insert(3.0,"adios");
+        assertEquals(testAVLTree.getRoot().getValue().get(0),"adios");
     }
 
     @Test
     public void insertionTest2(){
         setupScene1();
-        testAVLTree.insert(1.0,"o");
-        testAVLTree.insert(1.1,"r");
-        testAVLTree.insert(2.0,"d");
-        testAVLTree.insert(3.2,"n");
-        testAVLTree.insert(5.0,"o");
-        testAVLTree.insert(3.6,"a");
-        testAVLTree.insert(4.0,"d");
-        testAVLTree.insert(2.7,"e");
+        testAVLTree.insert(2.5,"e");
+        testAVLTree.insert(2.6,"n");
+        testAVLTree.insert(2.9," ");
+        testAVLTree.insert(4.7,"o");
+        testAVLTree.insert(9.2,"n");
+        testAVLTree.insert(4.8,"r");
+        testAVLTree.insert(4.9,"d");
+        testAVLTree.insert(9.1,"e");
 
         testAVLTree.inorderTraversal();
-        assertEquals(testAVLTree.getTreeStructure(),"ordenado");
+        assertEquals(testAVLTree.getTreeStructure(),"en orden");
     }
 
     @Test
