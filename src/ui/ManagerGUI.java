@@ -43,10 +43,12 @@ public class ManagerGUI {
 
     File selectedFile;
 
+
+
     private void missingInfo(){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Missing information!");
-        alert.setHeaderText("Looks like you've skipped some field");
+        alert.setHeaderText("Looks like you've skipped some field.");
         alert.setContentText("Fill all the fields and try again");
         alert.show();
     }
@@ -54,8 +56,16 @@ public class ManagerGUI {
     private void wrongFormat(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Invalid format!");
-        alert.setHeaderText("Looks like some field has a different format");
+        alert.setHeaderText("Looks like some field has a different format.");
         alert.setContentText("Check the formats and try again");
+        alert.show();
+    }
+
+    private void dataRequired(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Data required!");
+        alert.setHeaderText("Looks like there is no data uploaded.");
+        alert.setContentText("Upload a file or add a player to search information");
         alert.show();
     }
 
@@ -80,7 +90,13 @@ public class ManagerGUI {
 
     @FXML
     void MENUsearch(ActionEvent event) throws IOException {
-    showSearch();
+        if(manager.getActualFile()!=null){
+            showSearch();
+        }
+        else{
+            dataRequired();
+        }
+
     }
 
     @FXML
@@ -199,7 +215,7 @@ public class ManagerGUI {
     @FXML
     void SEARCHsearch(ActionEvent event) throws IOException {
         dataList.clear();
-        String searchResult="";
+        String searchTime="";
         ArrayList<String> aL = new ArrayList<>();
         Double from = Double.parseDouble(SEARCHfilterFrom.getText());
         Double to = Double.parseDouble(SEARCHfilterTo.getText());
@@ -240,7 +256,8 @@ public class ManagerGUI {
                 SEARCHplayersPointsPerGame,SEARCHplayersTcAssists,SEARCHplayersTcRebounds,
                 SEARCHplayersTcSteals,SEARCHplayersTcBlocks);
 
-        System.out.println(manager.getTime());
+        searchTime=manager.getTime();
+        System.out.println(searchTime);
     }
 
     @FXML
