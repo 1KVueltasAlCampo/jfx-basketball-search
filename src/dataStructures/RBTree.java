@@ -47,6 +47,7 @@ public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
         return aux;
     }
 
+    @Override
     public void insert(K key,V value){
         RBNode<K,V> node = new RBNode<>(key, value);
         if(root!=null){
@@ -208,16 +209,12 @@ public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
 
     public void searchByRange(RBNode<K,V> node, ArrayList<V> ll, K min, K max) {
         if (node == null) {
-            System.out.println("se acabo");
             return;
         }
-        System.out.println("paso algo al  menos");
-        System.out.println(node.getKey().toString());
         if (node.getKey().compareTo(max) < 0) { //k1 < node.data
             searchByRange(node.getRight(),ll, min, max);
         }
         if (node.getKey().compareTo(max) <= 0 && node.getKey().compareTo(min) >= 0) { //k1 <= node.data && k2 >= node.data
-            System.out.println("se agregaron cosas");
             ll.addAll(node.getValue());
         }
         searchByRange(node.getLeft(),ll, min, max);

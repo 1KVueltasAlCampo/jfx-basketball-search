@@ -1,6 +1,8 @@
 package model;
 
 import au.com.bytecode.opencsv.CSVReader;
+import dataStructures.AVLNode;
+import dataStructures.AVLTree;
 import dataStructures.RBNode;
 import dataStructures.RBTree;
 
@@ -9,18 +11,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Manager {
-    private RBTree<Double, Integer> pointsPerGame;
     private final static String SEPARATOR = ";";
+    private RBTree<Double, Integer> pointsPerGame;
     private final static int pointsPerGameIndex = 3;
-    private final static int POINTSPERGAME=1;
-    private RBTree<Double, Integer> blocks;
-    private final static int blocksIndex = 7;
+    private AVLTree<Double,Integer> assists;
+    private final static int assistsIndex = 4;
     private RBTree<Double,Integer> steals;
     private final static int stealsIndex = 6;
+    private RBTree<Double, Integer> blocks;
+    private final static int blocksIndex = 7;
+
     private File actualFile;
 
     public Manager(){
         pointsPerGame=new RBTree<>();
+        assists = new AVLTree<>();
         blocks=new RBTree<>();
         steals=new RBTree<>();
     }
@@ -40,6 +45,17 @@ public class Manager {
                 RBNode<Double,Integer> exampleNode = pointsPerGame.search(ppg);
                 if(exampleNode==null){
                     pointsPerGame.insert(ppg,index);
+                }
+                else{
+                    exampleNode.getValue().add(index);
+                }
+            }
+
+            if(!box[assistsIndex].equals("")){
+                Double ppg = Double.parseDouble(box[assistsIndex]);
+                AVLNode<Double,Integer> exampleNode = assists.search(ppg);
+                if(exampleNode==null){
+                    assists.insert(ppg,index);
                 }
                 else{
                     exampleNode.getValue().add(index);
@@ -78,13 +94,36 @@ public class Manager {
         ArrayList<String> informationAL = new ArrayList<>();
         switch (tree){
             case pointsPerGameIndex:
-                indexAL = pointsPerGame.searchByRange(start,end);
+                if(start==end){
+                    indexAL = pointsPerGame.searchElement(start);
+                }
+                else{
+                    indexAL = pointsPerGame.searchByRange(start,end);
+                }
+                break;
+            case assistsIndex:
+                if(start==end){
+                    indexAL = assists.searchElement(start);
+                }
+                else{
+                    indexAL = assists.searchByRange(start,end);
+                }
                 break;
             case blocksIndex:
-                indexAL=blocks.searchByRange(start,end);
+                if(start==end){
+                    indexAL = blocks.searchElement(start);
+                }
+                else{
+                    indexAL=blocks.searchByRange(start,end);
+                }
                 break;
             case stealsIndex:
-                indexAL=steals.searchByRange(start,end);
+                if(start==end){
+                    indexAL=steals.searchElement(start);
+                }
+                else{
+                    indexAL=steals.searchByRange(start,end);
+                }
                 break;
         }
         if(!indexAL.isEmpty()){
@@ -99,7 +138,53 @@ public class Manager {
         return informationAL;
     }
 
+    public RBTree<Double, Integer> getPointsPerGame() {
+        return pointsPerGame;
+    }
 
+    public void setPointsPerGame(RBTree<Double, Integer> pointsPerGame) {
+        this.pointsPerGame = pointsPerGame;
+    }
+
+    public String getSEPARATOR() {
+        return SEPARATOR;
+    }
+
+    public static int getPointsPerGameIndex() {
+        return pointsPerGameIndex;
+    }
+
+    public RBTree<Double, Integer> getBlocks() {
+        return blocks;
+    }
+
+    public void setBlocks(RBTree<Double, Integer> blocks) {
+        this.blocks = blocks;
+    }
+
+    public static int getBlocksIndex() {
+        return blocksIndex;
+    }
+
+    public RBTree<Double, Integer> getSteals() {
+        return steals;
+    }
+
+    public void setSteals(RBTree<Double, Integer> steals) {
+        this.steals = steals;
+    }
+
+    public static int getStealsIndex() {
+        return stealsIndex;
+    }
+
+    public File getActualFile() {
+        return actualFile;
+    }
+
+    public void setActualFile(File actualFile) {
+        this.actualFile = actualFile;
+    }
 
     //--------------------------------------------------------------------- GUI METHODS ----------------------------------------------------------
     public void addPLayer(String fullName, int age, Teams team, float trueShooting, float usage, float assist, float rebound, float defensive){

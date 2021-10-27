@@ -199,24 +199,26 @@ public class ManagerGUI {
     @FXML
     void SEARCHsearch(ActionEvent event) throws IOException {
         dataList.clear();
-        System.out.println("entra");
         ArrayList<String> aL = new ArrayList<>();
+        Double from = Double.parseDouble(SEARCHfilterFrom.getText());
+        Double to = Double.parseDouble(SEARCHfilterTo.getText());
         switch (SEARCHfilter.getValue()) {
             case "Points per game":
-                aL = manager.rangeSearch(3, Double.parseDouble(SEARCHfilterFrom.getText()), Double.parseDouble(SEARCHfilterTo.getText()));
+                aL = manager.rangeSearch(3, from, to);
+                break;
+            case "Assists":
+                aL = manager.rangeSearch(4,from,to);
                 break;
             case "Steals":
-                aL=manager.rangeSearch(6,Double.parseDouble(SEARCHfilterFrom.getText()),Double.parseDouble(SEARCHfilterTo.getText()));
+                aL=manager.rangeSearch(6,from, to);
                 break;
             case "Blocks":
-                aL = manager.rangeSearch(7, Double.parseDouble(SEARCHfilterFrom.getText()), Double.parseDouble(SEARCHfilterTo.getText()));
+                aL = manager.rangeSearch(7,from, to);
                 break;
         }
 
-        System.out.println(aL.size());
         for (int i = 0; i < aL.size(); i++) {
-            //System.out.println("texto: "+ aL.get(i));
-            String[] parts = aL.get(i).split(";");
+            String[] parts = aL.get(i).split(manager.getSEPARATOR());
             Player p = new Player(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7]);
             dataList.add(p);
         }
