@@ -149,6 +149,7 @@ public class AVLTree <K extends Comparable<K>,V> implements TreeInterface<K,V>{
         }
     }
 
+    @Override
     public ArrayList<V> searchByRange(K min,K max){
         ArrayList<V> aL = new ArrayList<>();
         searchByRange(root,aL,min,max);
