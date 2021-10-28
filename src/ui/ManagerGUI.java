@@ -1,6 +1,5 @@
 package ui;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -106,6 +106,14 @@ public class ManagerGUI {
 
     //-------------------------------------------------------- LOAD CSV CODE --------------------------------------------------------
 
+    private void fileAcceptedAlert(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Load finished!");
+        alert.setContentText("Looks like all worked great");
+        alert.setContentText("File successfully loaded");
+        alert.show();
+    }
+
     @FXML
     void LOADCSVdone(ActionEvent event) throws IOException {
         manager.readCsv(selectedFile);
@@ -116,12 +124,25 @@ public class ManagerGUI {
     void LOADCSVfileDropped(DragEvent event) {
         event.acceptTransferModes(TransferMode.ANY);
         selectedFile = event.getDragboard().getFiles().get(0);
+        if(event.getDragboard().getFiles().get(0) != null){
+            fileAcceptedAlert();
+        }
     }
 
     @FXML
     void LOADCSVchoose(ActionEvent event) {
+        File oldFile = selectedFile;
+
         FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Csv files", "*.csv"));
+        File suggestedDirectory = new File("@../../data");
+        fileChooser.setInitialDirectory(suggestedDirectory);
+
         selectedFile = fileChooser.showOpenDialog(mainStage);
+
+        if(selectedFile != oldFile){
+            fileAcceptedAlert();
+        }
     }
 
     //-------------------------------------------------------- ADD A PLAYER CODE --------------------------------------------------------
@@ -161,6 +182,9 @@ public class ManagerGUI {
     //-------------------------------------------------------- SEARCH CODE --------------------------------------------------------
 
     private final ObservableList<Player> dataList = FXCollections.observableArrayList();
+
+    String [] comparation = new String[2];
+    String comparationMsg = "";
 
     @FXML
     private ComboBox<String> SEARCHfilter;
@@ -202,9 +226,20 @@ public class ManagerGUI {
     @FXML
     private Button SEARCHcompareButton;
 
+    private void showTimeAlert(int n){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Looks like the search it's done");
+        if(n == 2){
+            comparationMsg = "The search using a binary search tree it's: "+ comparation[0] + "\n" + " and using a red and black tree it's: " + comparation[1];
+        }else{
+            comparationMsg = "The search took: " + comparation[0];
+        }
+        alert.setContentText(comparationMsg);
+        alert.showAndWait();
+    }
     @FXML
     void SEARCHfilterChanged(ActionEvent event) {
-        if(SEARCHfilter.getValue().equals("Points per game") || SEARCHfilter.getValue().equals("Assists")){
+        if(SEARCHfilter.getValue().equals("Points per game") || SEARCHfilter.getValue().equals("Steals")){
             SEARCHcompareButton.setVisible(true);
         }else{
             SEARCHcompareButton.setVisible(false);
@@ -240,29 +275,78 @@ public class ManagerGUI {
             dataList.add(p);
         }
 
-        SEARCHplayersTcFullname.setCellValueFactory(new PropertyValueFactory<>("name"));
-        SEARCHplayersTcAge.setCellValueFactory(new PropertyValueFactory<>("age"));
-        SEARCHplayersTcTeam.setCellValueFactory(new PropertyValueFactory<>("team"));
-        SEARCHplayersPointsPerGame.setCellValueFactory(new PropertyValueFactory<>("pointsPerGame"));
-        SEARCHplayersTcAssists.setCellValueFactory(new PropertyValueFactory<>("assists"));
-        SEARCHplayersTcRebounds.setCellValueFactory(new PropertyValueFactory<>("rebounds"));
-        SEARCHplayersTcSteals.setCellValueFactory(new PropertyValueFactory<>("steals"));
-        SEARCHplayersTcBlocks.setCellValueFactory(new PropertyValueFactory<>("blocks"));
+        refreshSearchTV();
 
-        ObservableList<Player> aList = FXCollections.observableArrayList(dataList);
-        SEARCHplayersTv.setItems(aList);
-        SEARCHplayersTcFullname.setCellFactory(TextFieldTableCell.forTableColumn());
-        SEARCHplayersTv.getColumns().setAll(SEARCHplayersTcFullname,SEARCHplayersTcAge,SEARCHplayersTcTeam,
-                SEARCHplayersPointsPerGame,SEARCHplayersTcAssists,SEARCHplayersTcRebounds,
-                SEARCHplayersTcSteals,SEARCHplayersTcBlocks);
-
-        searchTime=manager.getTime();
-        System.out.println(searchTime);
+        comparation[0] = manager.getTime();
+        showTimeAlert(1);
     }
 
     @FXML
-    void SEARCHsearchAndCompare(ActionEvent event) {
+    void SEARCHsearchAndCompare(ActionEvent event) throws IOException {
+        dataList.clear();
 
+
+        String searchTime="";
+        ArrayList<String> aL = new ArrayList<>();
+        Double from = Double.parseDouble(SEARCHfilterFrom.getText());
+        Double to = Double.parseDouble(SEARCHfilterTo.getText());
+        switch (SEARCHfilter.getValue()) {
+            case "Points per game":
+                aL = manager.rangeSearch(3, from, to);
+                break;
+            case "Assists":
+                aL = manager.rangeSearch(4,from,to);
+                break;
+            case "Steals":
+                aL=manager.rangeSearch(6,from, to);
+                break;
+            case "Blocks":
+                aL = manager.rangeSearch(7,from, to);
+                break;
+        }
+
+        for (int i = 0; i < aL.size(); i++) {
+            String[] parts = aL.get(i).split(manager.getSEPARATOR());
+            Player p = new Player(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7]);
+            dataList.add(p);
+        }
+
+        refreshSearchTV();
+
+        comparation[0] =manager.getTime();
+
+        dataList.clear();
+
+        switch (SEARCHfilter.getValue()) {
+            case "Points per game":
+                aL = manager.rangeSearch(3, from, to);
+                break;
+            case "Assists":
+                aL = manager.rangeSearch(4,from,to);
+                break;
+            case "Steals":
+                aL=manager.rangeSearch(6,from, to);
+                break;
+            case "Blocks":
+                aL = manager.rangeSearch(7,from, to);
+                break;
+        }
+
+        for (int i = 0; i < aL.size(); i++) {
+            String[] parts = aL.get(i).split(manager.getSEPARATOR());
+            Player p = new Player(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7]);
+            dataList.add(p);
+        }
+
+        comparation[1] =manager.getTime();
+        showTimeAlert(2);
+    }
+
+    @FXML
+    void SEARCHeditPlayer(MouseEvent event) {
+        if(event.getClickCount() == 3){
+
+        }
     }
 
     //-------------------------------------------------------- SHOW WINDOWS CODE --------------------------------------------------------
@@ -316,12 +400,32 @@ public class ManagerGUI {
         items.add("Steals");
         items.add("Blocks");
 
+        comparation[0] = "";
+        comparation[1] = "";
 
         ObservableList<String> filterItems = FXCollections.observableArrayList(items);
 
         SEARCHfilter.setItems(filterItems);
 
         popUpStage.show();
+    }
+
+    private void refreshSearchTV(){
+        SEARCHplayersTcFullname.setCellValueFactory(new PropertyValueFactory<>("name"));
+        SEARCHplayersTcAge.setCellValueFactory(new PropertyValueFactory<>("age"));
+        SEARCHplayersTcTeam.setCellValueFactory(new PropertyValueFactory<>("team"));
+        SEARCHplayersPointsPerGame.setCellValueFactory(new PropertyValueFactory<>("pointsPerGame"));
+        SEARCHplayersTcAssists.setCellValueFactory(new PropertyValueFactory<>("assists"));
+        SEARCHplayersTcRebounds.setCellValueFactory(new PropertyValueFactory<>("rebounds"));
+        SEARCHplayersTcSteals.setCellValueFactory(new PropertyValueFactory<>("steals"));
+        SEARCHplayersTcBlocks.setCellValueFactory(new PropertyValueFactory<>("blocks"));
+
+        ObservableList<Player> aList = FXCollections.observableArrayList(dataList);
+        SEARCHplayersTv.setItems(aList);
+        SEARCHplayersTcFullname.setCellFactory(TextFieldTableCell.forTableColumn());
+        SEARCHplayersTv.getColumns().setAll(SEARCHplayersTcFullname,SEARCHplayersTcAge,SEARCHplayersTcTeam,
+                SEARCHplayersPointsPerGame,SEARCHplayersTcAssists,SEARCHplayersTcRebounds,
+                SEARCHplayersTcSteals,SEARCHplayersTcBlocks);
     }
 
 
