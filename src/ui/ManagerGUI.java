@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -264,13 +265,18 @@ public class ManagerGUI {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Looks like the search it's done");
         if(n == 2){
-            comparationMsg = "The search using a binary search tree it's: "+ comparation[0] + "\n" + " and using a red and black tree it's: " + comparation[1];
+            comparationMsg = "The search using a binary search tree it's: "+ comparation[1] + "\n" + " and using a red and black tree it's: " + comparation[0];
         }else{
             comparationMsg = "The search took: " + comparation[0];
         }
         alert.setContentText(comparationMsg);
         alert.showAndWait();
     }
+    @FXML
+    void SEARCHeditPlayer(MouseEvent event) {
+
+    }
+
     @FXML
     void SEARCHfilterChanged(ActionEvent event) {
         if(SEARCHfilter.getValue().equals("Points per game") || SEARCHfilter.getValue().equals("Steals")){
@@ -318,15 +324,13 @@ public class ManagerGUI {
     @FXML
     void SEARCHsearchAndCompare(ActionEvent event) throws IOException {
         dataList.clear();
-
-
         String searchTime="";
         ArrayList<String> aL = new ArrayList<>();
         Double from = Double.parseDouble(SEARCHfilterFrom.getText());
         Double to = Double.parseDouble(SEARCHfilterTo.getText());
         switch (SEARCHfilter.getValue()) {
             case "Points per game":
-                aL = manager.rangeSearch(3, from, to);
+                aL = manager.rangeSearch(-3, from, to);
                 break;
             case "Assists":
                 aL = manager.rangeSearch(4,from,to);
@@ -345,34 +349,7 @@ public class ManagerGUI {
             dataList.add(p);
         }
 
-        refreshSearchTV();
-
-        comparation[0] =manager.getTime();
-
-        dataList.clear();
-
-        switch (SEARCHfilter.getValue()) {
-            case "Points per game":
-                aL = manager.rangeSearch(3, from, to);
-                break;
-            case "Assists":
-                aL = manager.rangeSearch(4,from,to);
-                break;
-            case "Steals":
-                aL=manager.rangeSearch(6,from, to);
-                break;
-            case "Blocks":
-                aL = manager.rangeSearch(7,from, to);
-                break;
-        }
-
-        for (int i = 0; i < aL.size(); i++) {
-            String[] parts = aL.get(i).split(manager.getSEPARATOR());
-            Player p = new Player(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7]);
-            dataList.add(p);
-        }
-
-        comparation[1] =manager.getTime();
+        comparation=manager.getTime().split("-");
         showTimeAlert(2);
     }
 

@@ -1,10 +1,7 @@
 package model;
 
 import au.com.bytecode.opencsv.CSVReader;
-import dataStructures.AVLNode;
-import dataStructures.AVLTree;
-import dataStructures.RBNode;
-import dataStructures.RBTree;
+import dataStructures.*;
 
 import java.io.*;
 import java.math.RoundingMode;
@@ -16,6 +13,8 @@ public class Manager {
     private final static String SEPARATOR = ";";
     private RBTree<Double, Integer> pointsPerGame;
     private final static int pointsPerGameIndex = 3;
+    private BSTree<Double,Integer>  ppgBST;
+    private final static int ppgBSTIndex = -3;
     private AVLTree<Double,Integer> assists;
     private final static int assistsIndex = 4;
     private RBTree<Double,Integer> steals;
@@ -28,6 +27,7 @@ public class Manager {
 
     public Manager(){
         pointsPerGame=new RBTree<>();
+        ppgBST=new BSTree<>();
         assists = new AVLTree<>();
         blocks=new RBTree<>();
         steals=new RBTree<>();
@@ -52,11 +52,14 @@ public class Manager {
             if(!box[pointsPerGameIndex].equals("")){
                 Double ppg = Double.parseDouble(box[pointsPerGameIndex]);
                 RBNode<Double,Integer> exampleNode = pointsPerGame.search(ppg);
+                BSTNode<Double,Integer> bstExampleNode = ppgBST.search(ppg);
                 if(exampleNode==null){
                     pointsPerGame.insert(ppg,index);
+                    ppgBST.insert(ppg,index);
                 }
                 else{
                     exampleNode.getValue().add(index);
+                    bstExampleNode.getValue().add(index);
                 }
             }
 
@@ -99,6 +102,7 @@ public class Manager {
     }
 
     public ArrayList<String> rangeSearch(int tree,double start,double end) throws IOException {
+        time="";
         ArrayList<Integer> indexAL = new ArrayList<>();
         ArrayList<String> informationAL = new ArrayList<>();
         long time1=0,time2=0;
@@ -112,6 +116,30 @@ public class Manager {
                 else{
                     time1=System.nanoTime();
                     indexAL = pointsPerGame.searchByRange(start,end);
+                    time2=System.nanoTime();
+                }
+                break;
+            case ppgBSTIndex:
+                if(start==end){
+                    time1=System.nanoTime();
+                    pointsPerGame.searchElement(start);
+                    time2=System.nanoTime();
+                    DecimalFormat df = new DecimalFormat("#.####");
+                    df.setRoundingMode(RoundingMode.CEILING);
+                    time+= df.format(((float)(time2-time1)/1000000))+" milliseconds-";
+                    time1=System.nanoTime();
+                    indexAL = ppgBST.searchElement(start);
+                    time2=System.nanoTime();
+                }
+                else{
+                    time1=System.nanoTime();
+                    pointsPerGame.searchByRange(start,end);
+                    time2=System.nanoTime();
+                    DecimalFormat df = new DecimalFormat("#.####");
+                    df.setRoundingMode(RoundingMode.CEILING);
+                    time+= df.format(((float)(time2-time1)/1000000))+" milliseconds-";
+                    time1=System.nanoTime();
+                    indexAL=ppgBST.searchByRange(start,end);
                     time2=System.nanoTime();
                 }
                 break;
@@ -163,7 +191,7 @@ public class Manager {
         }
         DecimalFormat df = new DecimalFormat("#.####");
         df.setRoundingMode(RoundingMode.CEILING);
-        time= df.format(((float)(time2-time1)/1000000))+" milliseconds";
+        time+= df.format(((float)(time2-time1)/1000000))+" milliseconds";
 
         return informationAL;
     }

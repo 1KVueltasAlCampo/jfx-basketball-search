@@ -29,8 +29,8 @@ public class BSTreeTest {
         testBSTree.insert(4.9,"d");
         testBSTree.insert(9.1,"e");
 
-        //testBSTree.inorderTraversal();
-        //assertEquals(testBSTree.getTreeStructure(),"en orden");
+        testBSTree.inorderTraversal(testBSTree.getRoot());
+        assertEquals(testBSTree.getTreeStructure(),"en orden");
     }
 
     @Test

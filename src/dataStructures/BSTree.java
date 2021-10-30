@@ -5,9 +5,11 @@ import java.util.ArrayList;
 public class BSTree<K extends Comparable<K>,V> implements TreeInterface<K,V> {
 
     private BSTNode<K,V> root;
+    private String treeStructure;
 
         public BSTree(){
         root=null;
+        treeStructure="";
         }
 
     @Override
@@ -22,11 +24,20 @@ public class BSTree<K extends Comparable<K>,V> implements TreeInterface<K,V> {
         }
     }
 
+    public void inorderTraversal(BSTNode<K,V> node) {
+        if(node!=null) {
+            inorderTraversal(node.getLeftNode());
+            String temp = node.getValue().toString();
+            treeStructure += temp.substring(1,temp.length()-1);
+            inorderTraversal(node.getRightNode());
+        }
+    }
+
     public BSTNode<K,V> insert  (BSTNode<K,V> root,BSTNode<K,V> node ){
             if(root==null){
                 return node;
             }
-            else if(node.compareTo(root)==1){
+            else if(node.compareTo(root)<0){
                     if(root.getRightNode()!=null){
                         insert(root.getRightNode(),node);
                     }
@@ -189,5 +200,21 @@ public class BSTree<K extends Comparable<K>,V> implements TreeInterface<K,V> {
             ll.addAll(node.getValue());
         }
         searchByRange(node.getLeftNode(),ll, min, max);
+    }
+
+    public BSTNode<K, V> getRoot() {
+        return root;
+    }
+
+    public void setRoot(BSTNode<K, V> root) {
+        this.root = root;
+    }
+
+    public String getTreeStructure() {
+        return treeStructure;
+    }
+
+    public void setTreeStructure(String treeStructure) {
+        this.treeStructure = treeStructure;
     }
 }
