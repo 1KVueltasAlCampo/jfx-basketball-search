@@ -7,6 +7,7 @@ public class Node<K,V> {
     protected K key;
     ArrayList<V> value;
 
+
     public Node(K key,V value){
         this.key=key;
         this.value=new ArrayList<>();

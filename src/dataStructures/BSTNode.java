@@ -2,16 +2,18 @@ package dataStructures;
 
 public class BSTNode<K extends Comparable<K>,V> extends Node<K, V>{
 
-    private BSTNode rightNode;
-    private BSTNode leftNode;
+    private BSTNode<K,V> rightNode;
+    private BSTNode<K,V> leftNode;
+    private BSTNode<K,V> parent;
 
     public BSTNode(K key, V value){
         super(key, value);
         rightNode=null;
         leftNode=null;
+        parent=null;
     }
 
-    public BSTNode getRightNode() {
+    public BSTNode<K,V> getRightNode() {
         return rightNode;
     }
 
@@ -19,12 +21,20 @@ public class BSTNode<K extends Comparable<K>,V> extends Node<K, V>{
         this.rightNode = rightNode;
     }
 
-    public BSTNode getLeftNode() {
+    public BSTNode<K,V> getLeftNode() {
         return leftNode;
     }
 
     public void setLeftNode(BSTNode leftNode) {
         this.leftNode = leftNode;
+    }
+
+    public BSTNode<K,V> getParent() {
+        return parent;
+    }
+
+    public void setParent(BSTNode parent) {
+        this.parent = parent;
     }
 
     public int compareTo(BSTNode<K,V> otherNode) {
