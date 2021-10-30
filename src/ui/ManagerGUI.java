@@ -11,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -84,11 +83,6 @@ public class ManagerGUI {
     }
 
     @FXML
-    void MENUeditDatabase(ActionEvent event) throws IOException{
-
-    }
-
-    @FXML
     void MENUsearch(ActionEvent event) throws IOException {
         if(manager.getActualFile()!=null){
             showSearch();
@@ -111,7 +105,7 @@ public class ManagerGUI {
         alert.setTitle("Load finished!");
         alert.setContentText("Looks like all worked great");
         alert.setContentText("File successfully loaded");
-        alert.show();
+        alert.showAndWait();
     }
 
     @FXML
@@ -124,7 +118,8 @@ public class ManagerGUI {
     void LOADCSVfileDropped(DragEvent event) {
         event.acceptTransferModes(TransferMode.ANY);
         selectedFile = event.getDragboard().getFiles().get(0);
-        if(event.getDragboard().getFiles().get(0) != null){
+
+        if(event.getDragboard().getFiles().get(0) != null ){
             fileAcceptedAlert();
         }
     }
@@ -159,7 +154,7 @@ public class ManagerGUI {
     private TextField ADDPLAYERpointsPerGame;
 
     @FXML
-    private TextField ADDPLAYERRebounds;
+    private TextField ADDPLAYERrebounds;
 
     @FXML
     private TextField ADDPLAYERassist;
@@ -174,9 +169,48 @@ public class ManagerGUI {
     @FXML
     private ComboBox<Teams> ADDPLAYERteam;
 
+    void playerCreatedAlert(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Player created!");
+        alert.setHeaderText("Looks like all worked perfectly");
+        alert.setContentText("Player added");
+        alert.show();
+    }
+
     @FXML
     void ADDPLAYERdone(ActionEvent event) {
+        String names = ADDPLAYERname.getText();
+        String lastNames = ADDPLAYERlastNames.getText();
+        String ageS = ADDPLAYERage.getText();
+        Teams team = ADDPLAYERteam.getValue();
+        String pPGS = ADDPLAYERpointsPerGame.getText();
+        String reboundsS = ADDPLAYERrebounds.getText();
+        String assistsS = ADDPLAYERassist.getText();
+        String stealsS = ADDPLAYERsteals.getText();
+        String blocksS = ADDPLAYERblocks.getText();
 
+        if(names.equals("") || lastNames.equals("") || ageS.equals("") || pPGS.equals("")
+                || reboundsS.equals("") || assistsS.equals("") || stealsS.equals("") || blocksS.equals("") || team == null){
+
+            missingInfo();
+        }else{
+            try{
+                int age = Integer.parseInt(ageS);
+                double pPG = Double.parseDouble(pPGS);
+                double rebounds = Double.parseDouble(reboundsS);
+                double assists = Double.parseDouble(assistsS);
+                double steals = Double.parseDouble(stealsS);
+                double blocks = Double.parseDouble(blocksS);
+
+                manager.addPLayer(names+lastNames, age, team, pPG, rebounds, assists, steals, blocks);
+                playerCreatedAlert();
+
+                showAddPlayer();
+
+            }catch (Exception e){
+                wrongFormat();
+            }
+        }
     }
 
     //-------------------------------------------------------- SEARCH CODE --------------------------------------------------------
@@ -343,10 +377,10 @@ public class ManagerGUI {
     }
 
     @FXML
-    void SEARCHeditPlayer(MouseEvent event) {
-        if(event.getClickCount() == 3){
+    void SEARCHsaveChanges(ActionEvent event) throws IOException {
+        ArrayList<Player> newArr = (ArrayList<Player>) SEARCHplayersTv.getItems();
+        manager.updateCsv(newArr);
 
-        }
     }
 
     //-------------------------------------------------------- SHOW WINDOWS CODE --------------------------------------------------------

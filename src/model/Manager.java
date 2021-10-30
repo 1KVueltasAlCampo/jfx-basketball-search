@@ -6,10 +6,7 @@ import dataStructures.AVLTree;
 import dataStructures.RBNode;
 import dataStructures.RBTree;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -34,6 +31,12 @@ public class Manager {
         assists = new AVLTree<>();
         blocks=new RBTree<>();
         steals=new RBTree<>();
+    }
+
+    public void updateCsv(ArrayList<Player> newArr) throws IOException {
+        if(actualFile != null){
+            BufferedWriter bf = new BufferedWriter(new FileWriter(actualFile));
+        }
     }
 
     public void readCsv(File file) throws IOException {
@@ -234,7 +237,7 @@ public class Manager {
     }
 
     //--------------------------------------------------------------------- GUI METHODS ----------------------------------------------------------
-    public void addPLayer(String fullName, int age, Teams team, float trueShooting, float usage, float assist, float rebound, float defensive){
+    public void addPLayer(String fullName, int age, Teams team, double pointsPerGame, double rebounds, double assists, double steals, double blocks){
 
     }
 
