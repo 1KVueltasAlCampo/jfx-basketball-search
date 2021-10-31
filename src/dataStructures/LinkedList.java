@@ -1,6 +1,7 @@
 package dataStructures;
 
 import java.util.ArrayList;
+//xD
 
 public class LinkedList<K extends Comparable<K>,V extends Comparable<V>> implements SearchStructuresInterface<K, V>{
     private LinkedListNode<K,V> root;
