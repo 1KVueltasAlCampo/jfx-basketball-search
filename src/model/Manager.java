@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class Manager {
     private final static String SEPARATOR = ";";
-    private RBTree<Double, Integer> pointsPerGame;
+    private AVLTree<Double, Integer> pointsPerGame;
     private final static int pointsPerGameIndex = 3;
     private BSTree<Double,Integer>  ppgBST;
     private final static int ppgBSTIndex = -3;
@@ -19,6 +19,8 @@ public class Manager {
     private final static int assistsIndex = 4;
     private RBTree<Double,Integer> steals;
     private final static int stealsIndex = 6;
+    private BSTree<Double,Integer> stBST;
+    private final static int stBstIndex=-6;
     private RBTree<Double, Integer> blocks;
     private final static int blocksIndex = 7;
     private String time;
@@ -26,11 +28,13 @@ public class Manager {
     private File actualFile;
 
     public Manager(){
-        pointsPerGame=new RBTree<>();
+        pointsPerGame=new AVLTree<>();
         ppgBST=new BSTree<>();
         assists = new AVLTree<>();
+        stBST=new BSTree<>();
         blocks=new RBTree<>();
         steals=new RBTree<>();
+        time = "";
     }
 
     public void updateCsv(ArrayList<Player> newArr) throws IOException {
@@ -51,7 +55,7 @@ public class Manager {
 
             if(!box[pointsPerGameIndex].equals("")){
                 Double ppg = Double.parseDouble(box[pointsPerGameIndex]);
-                RBNode<Double,Integer> exampleNode = pointsPerGame.search(ppg);
+                AVLNode<Double,Integer> exampleNode = pointsPerGame.search(ppg);
                 BSTNode<Double,Integer> bstExampleNode = ppgBST.search(ppg);
                 if(exampleNode==null){
                     pointsPerGame.insert(ppg,index);
@@ -88,11 +92,14 @@ public class Manager {
             if(!box[stealsIndex].equals("")){
                 Double ppg = Double.parseDouble(box[stealsIndex]);
                 RBNode<Double,Integer> exampleNode = steals.search(ppg);
+                BSTNode<Double,Integer> bstExampleNode = stBST.search(ppg);
                 if(exampleNode==null){
                     steals.insert(ppg,index);
+                    stBST.insert(ppg,index);
                 }
                 else{
                     exampleNode.getValue().add(index);
+                    bstExampleNode.getValue().add(index);
                 }
             }
 
@@ -121,25 +128,25 @@ public class Manager {
                 break;
             case ppgBSTIndex:
                 if(start==end){
-                    time1=System.nanoTime();
-                    pointsPerGame.searchElement(start);
-                    time2=System.nanoTime();
+                    long time11=System.nanoTime();
+                    indexAL = ppgBST.searchElement(start);
+                    long time22=System.nanoTime();
                     DecimalFormat df = new DecimalFormat("#.####");
                     df.setRoundingMode(RoundingMode.CEILING);
-                    time+= df.format(((float)(time2-time1)/1000000))+" milliseconds-";
+                    time += df.format(((float)(time22-time11)/1000000))+" milliseconds°";
                     time1=System.nanoTime();
-                    indexAL = ppgBST.searchElement(start);
+                    indexAL=pointsPerGame.searchElement(start);
                     time2=System.nanoTime();
                 }
                 else{
-                    time1=System.nanoTime();
-                    pointsPerGame.searchByRange(start,end);
-                    time2=System.nanoTime();
+                    long time11=System.nanoTime();
+                    indexAL=ppgBST.searchByRange(start,end);
+                    long time22=System.nanoTime();
                     DecimalFormat df = new DecimalFormat("#.####");
                     df.setRoundingMode(RoundingMode.CEILING);
-                    time+= df.format(((float)(time2-time1)/1000000))+" milliseconds-";
+                    time+= df.format(((float)(time22-time11)/1000000))+" milliseconds°";
                     time1=System.nanoTime();
-                    indexAL=ppgBST.searchByRange(start,end);
+                    indexAL=pointsPerGame.searchByRange(start,end);
                     time2=System.nanoTime();
                 }
                 break;
@@ -179,6 +186,31 @@ public class Manager {
                     time2=System.nanoTime();
                 }
                 break;
+
+            case stBstIndex:
+                if(start==end){
+                    long time11=System.nanoTime();
+                    indexAL = stBST.searchElement(start);
+                    long time22=System.nanoTime();
+                    DecimalFormat df = new DecimalFormat("#.####");
+                    df.setRoundingMode(RoundingMode.CEILING);
+                    time += df.format(((float)(time22-time11)/1000000))+" milliseconds°";
+                    time1=System.nanoTime();
+                    indexAL=steals.searchElement(start);
+                    time2=System.nanoTime();
+                }
+                else{
+                    long time11=System.nanoTime();
+                    indexAL=stBST.searchByRange(start,end);
+                    long time22=System.nanoTime();
+                    DecimalFormat df = new DecimalFormat("#.####");
+                    df.setRoundingMode(RoundingMode.CEILING);
+                    time+= df.format(((float)(time22-time11)/1000000))+" milliseconds°";
+                    time1=System.nanoTime();
+                    indexAL=steals.searchByRange(start,end);
+                    time2=System.nanoTime();
+                }
+                break;
         }
         if(!indexAL.isEmpty()){
             CSVReader reader = new CSVReader(new FileReader(actualFile));
@@ -196,11 +228,11 @@ public class Manager {
         return informationAL;
     }
 
-    public RBTree<Double, Integer> getPointsPerGame() {
+    public AVLTree<Double, Integer> getPointsPerGame() {
         return pointsPerGame;
     }
 
-    public void setPointsPerGame(RBTree<Double, Integer> pointsPerGame) {
+    public void setPointsPerGame(AVLTree<Double, Integer> pointsPerGame) {
         this.pointsPerGame = pointsPerGame;
     }
 

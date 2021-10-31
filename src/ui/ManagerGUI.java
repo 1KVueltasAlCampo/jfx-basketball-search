@@ -261,13 +261,14 @@ public class ManagerGUI {
     @FXML
     private Button SEARCHcompareButton;
 
-    private void showTimeAlert(int n){
+    private void showTimeAlert(int n,String comparation){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Looks like the search it's done");
         if(n == 2){
-            comparationMsg = "The search using a binary search tree it's: "+ comparation[1] + "\n" + " and using a red and black tree it's: " + comparation[0];
+            String[] parts=comparation.split("°");
+            comparationMsg = "The search using a binary search tree it's: "+ parts[0] + "\n" + " and using a balanced tree it's: " + parts[1];
         }else{
-            comparationMsg = "The search took: " + comparation[0];
+            comparationMsg = "The search took: " + comparation;
         }
         alert.setContentText(comparationMsg);
         alert.showAndWait();
@@ -317,8 +318,8 @@ public class ManagerGUI {
 
         refreshSearchTV();
 
-        comparation[0] = manager.getTime();
-        showTimeAlert(1);
+        String info = manager.getTime();
+        showTimeAlert(1,info);
     }
 
     @FXML
@@ -332,14 +333,8 @@ public class ManagerGUI {
             case "Points per game":
                 aL = manager.rangeSearch(-3, from, to);
                 break;
-            case "Assists":
-                aL = manager.rangeSearch(4,from,to);
-                break;
             case "Steals":
-                aL=manager.rangeSearch(6,from, to);
-                break;
-            case "Blocks":
-                aL = manager.rangeSearch(7,from, to);
+                aL=manager.rangeSearch(-6,from, to);
                 break;
         }
 
@@ -349,8 +344,10 @@ public class ManagerGUI {
             dataList.add(p);
         }
 
-        comparation=manager.getTime().split("-");
-        showTimeAlert(2);
+        refreshSearchTV();
+
+        String info = manager.getTime();
+        showTimeAlert(2,info);
     }
 
     @FXML
