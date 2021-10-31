@@ -6,7 +6,6 @@ import dataStructures.*;
 import java.io.*;
 import java.math.RoundingMode;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -343,5 +342,8 @@ public class Manager {
     public ArrayList<Teams> getTeams(){
         ArrayList<Teams> teams=  new ArrayList<>(Arrays.asList(Teams.values()));
         return teams;
+    }
+
+    public void removePlayer(Player selectedPlayer) {
     }
 }

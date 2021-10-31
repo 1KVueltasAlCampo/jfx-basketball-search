@@ -214,6 +214,8 @@ public class ManagerGUI {
     String [] comparation = new String[2];
     String comparationMsg = "";
 
+    Player selectedPlayer;
+
     @FXML
     private ComboBox<String> SEARCHfilter;
 
@@ -353,6 +355,21 @@ public class ManagerGUI {
 
     }
 
+    @FXML
+    void SEARCHremovePlayer(ActionEvent event) {
+        selectedPlayer = SEARCHplayersTv.getSelectionModel().getSelectedItem();
+        if(selectedPlayer != null){
+            manager.removePlayer(selectedPlayer);
+            selectedPlayer = null;
+        }else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Something went wrong");
+            alert.setHeaderText("Looks like there's no player selected");
+            alert.setContentText("Select a player and try again");
+            alert.show();
+        }
+    }
+
     //-------------------------------------------------------- SHOW WINDOWS CODE --------------------------------------------------------
 
     private void showMenu() throws IOException {
@@ -406,6 +423,7 @@ public class ManagerGUI {
 
         comparation[0] = "";
         comparation[1] = "";
+        selectedPlayer = null;
 
         ObservableList<String> filterItems = FXCollections.observableArrayList(items);
 
@@ -426,7 +444,17 @@ public class ManagerGUI {
 
         ObservableList<Player> aList = FXCollections.observableArrayList(dataList);
         SEARCHplayersTv.setItems(aList);
+
         SEARCHplayersTcFullname.setCellFactory(TextFieldTableCell.forTableColumn());
+        SEARCHplayersTcAge.setCellFactory(TextFieldTableCell.forTableColumn());
+        SEARCHplayersTcTeam.setCellFactory(TextFieldTableCell.forTableColumn());
+        SEARCHplayersPointsPerGame.setCellFactory(TextFieldTableCell.forTableColumn());
+        SEARCHplayersTcAssists.setCellFactory(TextFieldTableCell.forTableColumn());
+        SEARCHplayersTcRebounds.setCellFactory(TextFieldTableCell.forTableColumn());
+        SEARCHplayersTcSteals.setCellFactory(TextFieldTableCell.forTableColumn());
+        SEARCHplayersTcBlocks.setCellFactory(TextFieldTableCell.forTableColumn());
+
+
         SEARCHplayersTv.getColumns().setAll(SEARCHplayersTcFullname,SEARCHplayersTcAge,SEARCHplayersTcTeam,
                 SEARCHplayersPointsPerGame,SEARCHplayersTcAssists,SEARCHplayersTcRebounds,
                 SEARCHplayersTcSteals,SEARCHplayersTcBlocks);
