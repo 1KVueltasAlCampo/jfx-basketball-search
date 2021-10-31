@@ -15,11 +15,11 @@ public class Manager {
     private final static int pointsPerGameIndex = 3;
     private BSTree<Double,Integer>  ppgBST;
     private final static int ppgBSTIndex = -3;
-    private AVLTree<Double,Integer> assists;
+    private RBTree<Double,Integer> assists;
     private final static int assistsIndex = 4;
     private LinkedList<Double,Integer> rebounds;
     private final static int reboundsIndex= 5;
-    private RBTree<Double,Integer> steals;
+    private AVLTree<Double,Integer> steals;
     private final static int stealsIndex = 6;
     private BSTree<Double,Integer> stBST;
     private final static int stBstIndex=-6;
@@ -32,11 +32,11 @@ public class Manager {
     public Manager(){
         pointsPerGame=new AVLTree<>();
         ppgBST=new BSTree<>();
-        assists = new AVLTree<>();
+        assists = new RBTree<>();
         rebounds=new LinkedList<>();
         stBST=new BSTree<>();
         blocks=new RBTree<>();
-        steals=new RBTree<>();
+        steals=new AVLTree<>();
         time = "";
     }
 
@@ -84,7 +84,7 @@ public class Manager {
 
             if(!box[assistsIndex].equals("")){
                 Double ppg = Double.parseDouble(box[assistsIndex]);
-                AVLNode<Double,Integer> exampleNode = assists.search(ppg);
+                RBNode<Double,Integer> exampleNode = assists.search(ppg);
                 if(exampleNode==null){
                     assists.insert(ppg,index);
                 }
@@ -108,7 +108,7 @@ public class Manager {
 
             if(!box[stealsIndex].equals("")){
                 Double ppg = Double.parseDouble(box[stealsIndex]);
-                RBNode<Double,Integer> exampleNode = steals.search(ppg);
+                AVLNode<Double,Integer> exampleNode = steals.search(ppg);
                 BSTNode<Double,Integer> bstExampleNode = stBST.search(ppg);
                 if(exampleNode==null){
                     steals.insert(ppg,index);
@@ -290,11 +290,11 @@ public class Manager {
         return blocksIndex;
     }
 
-    public RBTree<Double, Integer> getSteals() {
+    public AVLTree<Double, Integer> getSteals() {
         return steals;
     }
 
-    public void setSteals(RBTree<Double, Integer> steals) {
+    public void setSteals(AVLTree<Double, Integer> steals) {
         this.steals = steals;
     }
 
@@ -310,11 +310,11 @@ public class Manager {
         this.actualFile = actualFile;
     }
 
-    public AVLTree<Double, Integer> getAssists() {
+    public RBTree<Double, Integer> getAssists() {
         return assists;
     }
 
-    public void setAssists(AVLTree<Double, Integer> assists) {
+    public void setAssists(RBTree<Double, Integer> assists) {
         this.assists = assists;
     }
 
