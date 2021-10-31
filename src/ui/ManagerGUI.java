@@ -61,6 +61,14 @@ public class ManagerGUI {
         alert.show();
     }
 
+    private void closeCSV(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("The file is being used");
+        alert.setHeaderText("Looks like the file you are trying to modify is open by another program or you do not have access to it");
+        alert.setContentText("Close the program or modify the access permissions and try again");
+        alert.show();
+    }
+
     private void dataRequired(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Data required!");
@@ -72,6 +80,9 @@ public class ManagerGUI {
 
     @FXML
     void ALLWINDOWScancel(ActionEvent event) throws IOException {
+        if(selectedFile!=null){
+            manager.readCsv(selectedFile);
+        }
         showMenu();
     }
 
@@ -315,7 +326,7 @@ public class ManagerGUI {
 
         for (int i = 0; i < aL.size(); i++) {
             String[] parts = aL.get(i).split(manager.getSEPARATOR());
-            Player p = new Player(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7],Integer.parseInt(parts[8]));
+            Player p = new Player(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7],Integer.parseInt(parts[parts.length-1]));
             dataList.add(p);
         }
 
@@ -343,7 +354,7 @@ public class ManagerGUI {
 
         for (int i = 0; i < aL.size(); i++) {
             String[] parts = aL.get(i).split(manager.getSEPARATOR());
-            Player p = new Player(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7],Integer.parseInt(parts[8]));
+            Player p = new Player(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7],Integer.parseInt(parts[parts.length]));
             dataList.add(p);
         }
 
