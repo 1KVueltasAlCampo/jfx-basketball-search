@@ -257,8 +257,10 @@ public class Manager {
             CSVReader reader = new CSVReader(new FileReader(actualFile));
             ArrayList<String[]> aux = (ArrayList<String[]>) reader.readAll();
             for(int i=0;i<indexAL.size();i++){
-                String text = String.join(",",aux.get(indexAL.get(i))).replaceAll("\\[","");
+                int pos = indexAL.get(i);
+                String text = String.join(",",aux.get(pos)).replaceAll("\\[","");
                 text.replaceAll("]","");
+                text +=SEPARATOR+pos;
                 informationAL.add(text);
             }
         }

@@ -96,7 +96,12 @@ public class ManagerGUI {
 
     @FXML
     void MENUaddPlayer(ActionEvent event) throws IOException {
-        showAddPlayer();
+        if(manager.getActualFile()!=null){
+            showAddPlayer();
+        }
+        else{
+            dataRequired();
+        }
     }
 
     //-------------------------------------------------------- LOAD CSV CODE --------------------------------------------------------
@@ -310,7 +315,7 @@ public class ManagerGUI {
 
         for (int i = 0; i < aL.size(); i++) {
             String[] parts = aL.get(i).split(manager.getSEPARATOR());
-            Player p = new Player(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7]);
+            Player p = new Player(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7],Integer.parseInt(parts[8]));
             dataList.add(p);
         }
 
@@ -338,7 +343,7 @@ public class ManagerGUI {
 
         for (int i = 0; i < aL.size(); i++) {
             String[] parts = aL.get(i).split(manager.getSEPARATOR());
-            Player p = new Player(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7]);
+            Player p = new Player(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7],Integer.parseInt(parts[8]));
             dataList.add(p);
         }
 
