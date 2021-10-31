@@ -17,6 +17,8 @@ public class Manager {
     private final static int ppgBSTIndex = -3;
     private AVLTree<Double,Integer> assists;
     private final static int assistsIndex = 4;
+    private LinkedList<Double,Integer> rebounds;
+    private final static int reboundsIndex= 5;
     private RBTree<Double,Integer> steals;
     private final static int stealsIndex = 6;
     private BSTree<Double,Integer> stBST;
@@ -31,6 +33,7 @@ public class Manager {
         pointsPerGame=new AVLTree<>();
         ppgBST=new BSTree<>();
         assists = new AVLTree<>();
+        rebounds=new LinkedList<>();
         stBST=new BSTree<>();
         blocks=new RBTree<>();
         steals=new RBTree<>();
@@ -67,6 +70,18 @@ public class Manager {
                 }
             }
 
+            if(!box[reboundsIndex].equals("")){
+                Double ppg = Double.parseDouble(box[reboundsIndex]);
+                LinkedListNode<Double,Integer> exampleNode = rebounds.search(ppg);
+                if(exampleNode==null){
+                    rebounds.insert(ppg,index);
+                }
+                else{
+                    exampleNode.getValue().add(index);
+                }
+            }
+
+
             if(!box[assistsIndex].equals("")){
                 Double ppg = Double.parseDouble(box[assistsIndex]);
                 AVLNode<Double,Integer> exampleNode = assists.search(ppg);
@@ -77,6 +92,8 @@ public class Manager {
                     exampleNode.getValue().add(index);
                 }
             }
+
+
 
             if(!box[blocksIndex].equals("")){
                 Double ppg = Double.parseDouble(box[blocksIndex]);
@@ -150,6 +167,7 @@ public class Manager {
                     time2=System.nanoTime();
                 }
                 break;
+
             case assistsIndex:
                 if(start==end){
                     time1=System.nanoTime();
@@ -162,18 +180,20 @@ public class Manager {
                     time2=System.nanoTime();
                 }
                 break;
-            case blocksIndex:
+
+            case reboundsIndex:
                 if(start==end){
                     time1=System.nanoTime();
-                    indexAL = blocks.searchElement(start);
+                    indexAL = rebounds.searchElement(start);
                     time2=System.nanoTime();
                 }
                 else{
                     time1=System.nanoTime();
-                    indexAL=blocks.searchByRange(start,end);
+                    indexAL = rebounds.searchByRange(start,end);
                     time2=System.nanoTime();
                 }
                 break;
+
             case stealsIndex:
                 if(start==end){
                     time1=System.nanoTime();
@@ -211,6 +231,20 @@ public class Manager {
                     time2=System.nanoTime();
                 }
                 break;
+
+            case blocksIndex:
+                if(start==end){
+                    time1=System.nanoTime();
+                    indexAL = blocks.searchElement(start);
+                    time2=System.nanoTime();
+                }
+                else{
+                    time1=System.nanoTime();
+                    indexAL=blocks.searchByRange(start,end);
+                    time2=System.nanoTime();
+                }
+                break;
+
         }
         if(!indexAL.isEmpty()){
             CSVReader reader = new CSVReader(new FileReader(actualFile));

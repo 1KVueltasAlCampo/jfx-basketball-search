@@ -302,6 +302,9 @@ public class ManagerGUI {
             case "Assists":
                 aL = manager.rangeSearch(4,from,to);
                 break;
+            case "Rebounds":
+                aL = manager.rangeSearch(5,from,to);
+                break;
             case "Steals":
                 aL=manager.rangeSearch(6,from, to);
                 break;

@@ -2,7 +2,7 @@ package dataStructures;
 
 import java.util.ArrayList;
 
-public class AVLTree <K extends Comparable<K>,V> implements TreeInterface<K,V>{
+public class AVLTree <K extends Comparable<K>,V> implements SearchStructuresInterface<K,V> {
 
     private AVLNode<K,V> root;
     private String treeStructure;

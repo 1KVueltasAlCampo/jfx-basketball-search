@@ -2,7 +2,7 @@ package dataStructures;
 
 import java.util.ArrayList;
 
-public class BSTree<K extends Comparable<K>,V> implements TreeInterface<K,V> {
+public class BSTree<K extends Comparable<K>,V> implements SearchStructuresInterface<K,V> {
 
     private BSTNode<K,V> root;
     private String treeStructure;

@@ -2,7 +2,7 @@ package dataStructures;
 
 import java.util.ArrayList;
 
-public class RBTree<K extends Comparable<K>,V> implements TreeInterface<K,V>{
+public class RBTree<K extends Comparable<K>,V> implements SearchStructuresInterface<K,V> {
 
     private final static boolean BLACK = false;
     private final static boolean RED = true;
