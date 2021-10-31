@@ -5,6 +5,9 @@ import dataStructures.*;
 
 import java.io.*;
 import java.math.RoundingMode;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,6 +47,11 @@ public class Manager {
         if(actualFile != null){
             BufferedWriter bf = new BufferedWriter(new FileWriter(actualFile));
         }
+    }
+
+    public void addPlayer(String name,String age,String team,String pointsPerGame,String assists,String rebounds,String steals,String blocks) throws IOException {
+        String theText = name+SEPARATOR+age+SEPARATOR+team+SEPARATOR+pointsPerGame+SEPARATOR+assists+SEPARATOR+rebounds+SEPARATOR+steals+SEPARATOR+blocks;
+        Files.write(actualFile.toPath(), theText.getBytes(), StandardOpenOption.APPEND);
     }
 
     public void readCsv(File file) throws IOException {
@@ -331,9 +339,6 @@ public class Manager {
     }
 
     //--------------------------------------------------------------------- GUI METHODS ----------------------------------------------------------
-    public void addPLayer(String fullName, int age, Teams team, double pointsPerGame, double rebounds, double assists, double steals, double blocks){
-
-    }
 
     public ArrayList<Teams> getTeams(){
         ArrayList<Teams> teams=  new ArrayList<>(Arrays.asList(Teams.values()));

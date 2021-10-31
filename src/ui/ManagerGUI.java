@@ -196,14 +196,7 @@ public class ManagerGUI {
             missingInfo();
         }else{
             try{
-                int age = Integer.parseInt(ageS);
-                double pPG = Double.parseDouble(pPGS);
-                double rebounds = Double.parseDouble(reboundsS);
-                double assists = Double.parseDouble(assistsS);
-                double steals = Double.parseDouble(stealsS);
-                double blocks = Double.parseDouble(blocksS);
-
-                manager.addPLayer(names+lastNames, age, team, pPG, rebounds, assists, steals, blocks);
+                manager.addPlayer(names+" "+lastNames, ageS,team.toString(), pPGS, reboundsS, assistsS, stealsS, blocksS);
                 playerCreatedAlert();
 
                 showAddPlayer();
