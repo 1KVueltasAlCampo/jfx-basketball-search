@@ -12,8 +12,9 @@ public class Player {
     SimpleStringProperty rebounds;
     SimpleStringProperty steals;
     SimpleStringProperty blocks;
+    int index;
 
-    public Player(String name,String age,String team,String pointsPerGame,String assists,String rebounds,String steals,String blocks){
+    public Player(String name,String age,String team,String pointsPerGame,String assists,String rebounds,String steals,String blocks,int index){
         this.name = new SimpleStringProperty(name);
         this.age = new SimpleStringProperty(age);
         this.team = new SimpleStringProperty(team);
@@ -22,6 +23,7 @@ public class Player {
         this.blocks = new SimpleStringProperty(blocks);
         this.rebounds = new SimpleStringProperty(rebounds);
         this.steals = new SimpleStringProperty(steals);
+        this.index=index;
     }
 
     public String getName() {
@@ -118,5 +120,13 @@ public class Player {
 
     public void setBlocks(String blocks) {
         this.blocks.set(blocks);
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 }

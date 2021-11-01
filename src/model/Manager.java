@@ -49,11 +49,18 @@ public class Manager {
     }
 
     public void addPlayer(String name,String age,String team,String pointsPerGame,String assists,String rebounds,String steals,String blocks) throws IOException {
-        String theText = name+SEPARATOR+age+SEPARATOR+team+SEPARATOR+pointsPerGame+SEPARATOR+assists+SEPARATOR+rebounds+SEPARATOR+steals+SEPARATOR+blocks;
+        String theText = name+SEPARATOR+age+SEPARATOR+team+SEPARATOR+pointsPerGame+SEPARATOR+assists+SEPARATOR+rebounds+SEPARATOR+steals+SEPARATOR+blocks+SEPARATOR+"\n";
         Files.write(actualFile.toPath(), theText.getBytes(), StandardOpenOption.APPEND);
     }
 
     public void readCsv(File file) throws IOException {
+        pointsPerGame=new AVLTree<>();
+        ppgBST=new BSTree<>();
+        rebounds=new LinkedList<>();
+        assists=new RBTree<>();
+        blocks=new RBTree<>();
+        steals=new AVLTree<>();
+        stBST=new BSTree<>();
         actualFile=file;
         BufferedReader br = new BufferedReader(new FileReader(file));
         br.readLine();
@@ -253,12 +260,14 @@ public class Manager {
                 break;
 
         }
-        if(!indexAL.isEmpty()){
+        if(indexAL!=null){
             CSVReader reader = new CSVReader(new FileReader(actualFile));
             ArrayList<String[]> aux = (ArrayList<String[]>) reader.readAll();
             for(int i=0;i<indexAL.size();i++){
-                String text = String.join(",",aux.get(indexAL.get(i))).replaceAll("\\[","");
+                int pos = indexAL.get(i);
+                String text = String.join(SEPARATOR,aux.get(pos)).replaceAll("\\[","");
                 text.replaceAll("]","");
+                text += SEPARATOR+pos;
                 informationAL.add(text);
             }
         }
