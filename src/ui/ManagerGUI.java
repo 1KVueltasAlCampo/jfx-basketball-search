@@ -354,7 +354,7 @@ public class ManagerGUI {
 
         for (int i = 0; i < aL.size(); i++) {
             String[] parts = aL.get(i).split(manager.getSEPARATOR());
-            Player p = new Player(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7],Integer.parseInt(parts[parts.length]));
+            Player p = new Player(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7],Integer.parseInt(parts[parts.length-1]));
             dataList.add(p);
         }
 
