@@ -202,13 +202,9 @@ public class BSTree<K extends Comparable<K>,V> implements SearchStructuresInterf
         searchByRange(node.getLeftNode(),ll, min, max);
     }
 
-    public BSTNode<K, V> getRoot() {
-        return root;
-    }
 
-    public void setRoot(BSTNode<K, V> root) {
-        this.root = root;
-    }
+
+
 
     public String getTreeStructure() {
         return treeStructure;
@@ -216,5 +212,13 @@ public class BSTree<K extends Comparable<K>,V> implements SearchStructuresInterf
 
     public void setTreeStructure(String treeStructure) {
         this.treeStructure = treeStructure;
+    }
+
+    public BSTNode<K, V> getRoot() {
+        return root;
+    }
+
+    public void setRoot(BSTNode<K, V> root) {
+        this.root = root;
     }
 }

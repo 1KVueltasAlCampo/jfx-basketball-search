@@ -14,7 +14,7 @@ public class BSTreeTest {
     public void insertionTest1(){
         setupScene1();
         testBSTree.insert(3.0,"adios");
-        //assertEquals(testBSTree.getRoot().getValue().get(0),"adios");
+        assertEquals(testBSTree.getRoot().getValue().get(0),"adios");
     }
 
     @Test
@@ -35,7 +35,7 @@ public class BSTreeTest {
 
     @Test
     public void insertionTest3(){
-        RBTree<Double, Long> ayuda = new RBTree<>();
+        BSTree<Double, Long> ayuda = new BSTree<>();
         ayuda.insert(4.0,1L);
         ayuda.insert(4.0,17L);
         ayuda.insert(3.0,4L);
@@ -78,14 +78,16 @@ public class BSTreeTest {
     @Test
     public void searchTest2(){
         setupScene1();
-        testBSTree.insert(1.0,"o");
-        testBSTree.insert(2.7,"n");
-        testBSTree.insert(3.6,"d");
+        testBSTree.insert(4.0,"o");
+        testBSTree.insert(6.7,"n");
+        testBSTree.insert(4.6,"d");
         testBSTree.insert(3.2,"e");
-        testBSTree.insert(1.1,"d");
-        testBSTree.insert(2.0,"a");
-        testBSTree.insert(4.0,"r");
-        testBSTree.insert(5.0,"o");
+        testBSTree.insert(2.1,"d");
+        testBSTree.insert(1.0,"a");
+        testBSTree.insert(7.0,"r");
+        testBSTree.insert(8.0,"o");
         assertEquals(testBSTree.searchElement(6.5),null);
     }
+
+
 }
