@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="540.0" minWidth="960.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #eff0f3;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="540.0" minWidth="960.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #eff0f3;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
       <ComboBox fx:id="SEARCHfilter" layoutX="86.0" layoutY="142.0" onAction="#SEARCHfilterChanged" prefWidth="150.0" promptText="Select a filter" style="-fx-background-color: #e2e3e4; -fx-background-radius: 10;" />
       <TextField fx:id="SEARCHfilterFrom" alignment="CENTER" layoutX="86.0" layoutY="201.0" prefHeight="27.0" prefWidth="150.0" promptText="May be decimals" style="-fx-background-radius: 10;">
@@ -44,14 +44,14 @@
         </Label>
       <TableView fx:id="SEARCHplayersTv" editable="true" layoutX="292.0" layoutY="128.0" onMouseClicked="#SEARCHeditPlayer" prefHeight="244.0" prefWidth="654.0" style="-fx-background-radius: 10;">
         <columns>
-          <TableColumn fx:id="SEARCHplayersTcFullname" prefWidth="133.0" text="Full name" />
-            <TableColumn fx:id="SEARCHplayersTcAge" prefWidth="41.0" text="Age" />
-            <TableColumn fx:id="SEARCHplayersTcTeam" prefWidth="94.0" text="Team" />
-          <TableColumn fx:id="SEARCHplayersPointsPerGame" prefWidth="102.0" text="Points Per Game" />
-            <TableColumn fx:id="SEARCHplayersTcRebounds" prefWidth="87.0" text="Rebounds" />
-            <TableColumn fx:id="SEARCHplayersTcAssists" minWidth="0.79998779296875" prefWidth="61.0" text="Assists" />
-            <TableColumn fx:id="SEARCHplayersTcSteals" minWidth="0.0" prefWidth="65.0" text="Steals" />
-            <TableColumn fx:id="SEARCHplayersTcBlocks" minWidth="0.79998779296875" prefWidth="70.0" text="Blocks" />
+          <TableColumn fx:id="SEARCHplayersTcFullname" onEditCommit="#SEARCHEditFullName" prefWidth="133.0" text="Full name" />
+            <TableColumn fx:id="SEARCHplayersTcAge" onEditCommit="#SEARCHEditAge" prefWidth="41.0" text="Age" />
+            <TableColumn fx:id="SEARCHplayersTcTeam" onEditCommit="#SEARCHEditTeam" prefWidth="94.0" text="Team" />
+          <TableColumn fx:id="SEARCHplayersPointsPerGame" onEditCommit="#SEARCHEditPpg" prefWidth="102.0" text="Points Per Game" />
+            <TableColumn fx:id="SEARCHplayersTcRebounds" onEditCommit="#SEARCHEditRebounds" prefWidth="87.0" text="Rebounds" />
+            <TableColumn fx:id="SEARCHplayersTcAssists" minWidth="0.79998779296875" onEditCommit="#SEARCHEditAssists" prefWidth="61.0" text="Assists" />
+            <TableColumn fx:id="SEARCHplayersTcSteals" minWidth="0.0" onEditCommit="#SEARCHEditSteals" prefWidth="65.0" text="Steals" />
+            <TableColumn fx:id="SEARCHplayersTcBlocks" minWidth="0.79998779296875" onEditCommit="#SEARCHEditBlocks" prefWidth="70.0" text="Blocks" />
         </columns>
       </TableView>
       <Label layoutX="15.0" layoutY="145.0" prefHeight="18.0" prefWidth="59.0" text="Filter:" textFill="#2d2d2d">
@@ -74,7 +74,7 @@
             <Font name="Consolas Bold" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="341.0" layoutY="387.0" mnemonicParsing="false" onAction="#SEARCHsaveChanges" prefHeight="29.0" prefWidth="181.0" style="-fx-background-color: #ff8e3c; -fx-background-radius: 10;" text="Save changes">
+      <Button layoutX="341.0" layoutY="387.0" mnemonicParsing="false" onAction="#SEARCHsaveChanges" prefHeight="29.0" prefWidth="181.0" style="-fx-background-color: #ff8e3c; -fx-background-radius: 10;" text="Reload">
          <font>
             <Font name="Consolas Bold" size="15.0" />
          </font>

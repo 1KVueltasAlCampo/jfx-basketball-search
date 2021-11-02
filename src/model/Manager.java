@@ -1,6 +1,7 @@
 package model;
 
 import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.CSVWriter;
 import dataStructures.*;
 
 import java.io.*;
@@ -42,12 +43,6 @@ public class Manager {
         time = "";
     }
 
-    public void updateCsv(ArrayList<Player> newArr) throws IOException {
-        if(actualFile != null){
-            BufferedWriter bf = new BufferedWriter(new FileWriter(actualFile));
-        }
-    }
-
     public void addPlayer(String name,String age,String team,String pointsPerGame,String assists,String rebounds,String steals,String blocks) throws IOException {
         String theText = name+SEPARATOR+age+SEPARATOR+team+SEPARATOR+pointsPerGame+SEPARATOR+assists+SEPARATOR+rebounds+SEPARATOR+steals+SEPARATOR+blocks+SEPARATOR+"\n";
         Files.write(actualFile.toPath(), theText.getBytes(), StandardOpenOption.APPEND);
@@ -68,6 +63,7 @@ public class Manager {
         int index = 1;
         String[] box;
         while(aux!=null){
+            aux=aux.replaceAll("\"", "");
             box = aux.split(SEPARATOR);
 
             if(!box[pointsPerGameIndex].equals("")){
@@ -137,6 +133,28 @@ public class Manager {
             index++;
             aux=br.readLine();
         }
+    }
+
+    public void updateCSV(String replace,int row, int col) throws IOException {
+        CSVReader reader = new CSVReader(new FileReader(actualFile), SEPARATOR.charAt(0));
+        ArrayList<String[]> csvBody = (ArrayList<String[]>) reader.readAll();
+        csvBody.get(row)[col] = replace;
+        reader.close();
+
+        CSVWriter writer = new CSVWriter(new FileWriter(actualFile), SEPARATOR.charAt(0));
+        writer.writeAll(csvBody);
+        writer.close();
+    }
+
+    public void deleteRow(int row) throws IOException {
+        CSVReader reader = new CSVReader(new FileReader(actualFile), SEPARATOR.charAt(0));
+        ArrayList<String[]> csvBody = (ArrayList<String[]>) reader.readAll();
+        csvBody.remove(row);
+        reader.close();
+
+        CSVWriter writer = new CSVWriter(new FileWriter(actualFile), SEPARATOR.charAt(0));
+        writer.writeAll(csvBody);
+        writer.close();
     }
 
     public ArrayList<String> rangeSearch(int tree,double start,double end) throws IOException {
@@ -268,6 +286,7 @@ public class Manager {
                 String text = String.join(SEPARATOR,aux.get(pos)).replaceAll("\\[","");
                 text.replaceAll("]","");
                 text += SEPARATOR+pos;
+                text=text.replaceAll("\"", "");
                 informationAL.add(text);
             }
         }
