@@ -290,6 +290,54 @@ public class ManagerGUI {
     }
 
     @FXML
+    void SEARCHEditFullName(TableColumn.CellEditEvent<Player, String> event) throws IOException {
+        int index=event.getRowValue().getIndex();
+        manager.updateCSV(event.getNewValue(),index,0);
+    }
+
+    @FXML
+    void SEARCHEditAge(TableColumn.CellEditEvent<Player, String> event) throws IOException {
+        int index=event.getRowValue().getIndex();
+        manager.updateCSV(event.getNewValue(),index,1);
+    }
+
+    @FXML
+    void SEARCHEditAssists(TableColumn.CellEditEvent<Player, String> event) throws IOException {
+        int index=event.getRowValue().getIndex();
+        manager.updateCSV(event.getNewValue(),index,5);
+    }
+
+    @FXML
+    void SEARCHEditBlocks(TableColumn.CellEditEvent<Player, String> event) throws IOException {
+        int index=event.getRowValue().getIndex();
+        manager.updateCSV(event.getNewValue(),index,7);
+    }
+
+    @FXML
+    void SEARCHEditPpg(TableColumn.CellEditEvent<Player, String> event) throws IOException {
+        int index=event.getRowValue().getIndex();
+        manager.updateCSV(event.getNewValue(),index,3);
+    }
+
+    @FXML
+    void SEARCHEditRebounds(TableColumn.CellEditEvent<Player, String> event) throws IOException {
+        int index=event.getRowValue().getIndex();
+        manager.updateCSV(event.getNewValue(),index,4);
+    }
+
+    @FXML
+    void SEARCHEditSteals(TableColumn.CellEditEvent<Player, String> event) throws IOException {
+        int index=event.getRowValue().getIndex();
+        manager.updateCSV(event.getNewValue(),index,6);
+    }
+
+    @FXML
+    void SEARCHEditTeam(TableColumn.CellEditEvent<Player, String> event) throws IOException {
+        int index=event.getRowValue().getIndex();
+        manager.updateCSV(event.getNewValue(),index,2);
+    }
+
+    @FXML
     void SEARCHfilterChanged(ActionEvent event) {
         if(SEARCHfilter.getValue().equals("Points per game") || SEARCHfilter.getValue().equals("Steals")){
             SEARCHcompareButton.setVisible(true);
@@ -366,17 +414,18 @@ public class ManagerGUI {
 
     @FXML
     void SEARCHsaveChanges(ActionEvent event) throws IOException {
-        ArrayList<Player> newArr = (ArrayList<Player>) SEARCHplayersTv.getItems();
-        manager.updateCsv(newArr);
-
+        manager.readCsv(selectedFile);
+        SEARCHsearch(event);
     }
 
     @FXML
-    void SEARCHremovePlayer(ActionEvent event) {
+    void SEARCHremovePlayer(ActionEvent event) throws IOException {
         selectedPlayer = SEARCHplayersTv.getSelectionModel().getSelectedItem();
         if(selectedPlayer != null){
-            manager.removePlayer(selectedPlayer);
+            manager.deleteRow(selectedPlayer.getIndex());
             selectedPlayer = null;
+            manager.readCsv(selectedFile);
+            SEARCHsearch(event);
         }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Something went wrong");
